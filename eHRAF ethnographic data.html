@@ -27708,7 +27708,25 @@ padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><o:p>&nbsp;</o:p></p>
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
 </div>
+	
+<button id="back-to-top" onclick="scrollToTop()">Back to Top</button>
 
+<script>
+    // Show or hide the button depending on scroll position
+    window.onscroll = function() {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        document.getElementById("back-to-top").style.display = "block";
+      } else {
+        document.getElementById("back-to-top").style.display = "none";
+      }
+    };
+
+    // Function to scroll to the top of the page
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+	
 </body>
 
 </html>
