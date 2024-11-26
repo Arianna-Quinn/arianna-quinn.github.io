@@ -1,330 +1,2756 @@
-<html xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:x="urn:schemas-microsoft-com:office:excel"
-xmlns="http://www.w3.org/TR/REC-html40">
-
-<head>
-<meta name="Excel Workbook Frameset">
-<meta http-equiv=Content-Type content="text/html; charset=utf-8">
-<meta name=ProgId content=Excel.Sheet>
-<meta name=Generator content="Microsoft Excel 15">
-<link rel=File-List href="Mastersdataset.fld/filelist.xml">
-<title>Master's Dataset</title>
-<![if !supportTabStrip]>
-<link id="shLink" href="Mastersdataset.fld/sheet001.htm">
-
-<link id="shLink">
-
-<script language="JavaScript">
-<!--
- var g_iIEVer=0;
- 
- var c_lTabs=1;
-
- var c_rgszSh=new Array(c_lTabs);
- c_rgszSh[0] = "Mastersdataset";
-
-
- var c_rgszClr=new Array(8);
- c_rgszClr[0]="window";
- c_rgszClr[1]="buttonface";
- c_rgszClr[2]="windowframe";
- c_rgszClr[3]="windowtext";
- c_rgszClr[4]="threedlightshadow";
- c_rgszClr[5]="threedhighlight";
- c_rgszClr[6]="threeddarkshadow";
- c_rgszClr[7]="threedshadow";
-
- var g_iShCur;
- var g_rglTabX=new Array(c_lTabs);
-
-function fnBuildFrameset()
-{
- var szHTML="<frameset rows=\"*,18\" border=0 width=0 frameborder=no framespacing=0>"+
-  "<frame src=\""+document.all.item("shLink")[0].href+"\" name=\"frSheet\" noresize>"+
-  "<frameset cols=\"54,*\" border=0 width=0 frameborder=no framespacing=0>"+
-  "<frame src=\"\" name=\"frScroll\" marginwidth=0 marginheight=0 scrolling=no>"+
-  "<frame src=\"\" name=\"frTabs\" marginwidth=0 marginheight=0 scrolling=no>"+
-  "</frameset></frameset><plaintext>";
-
-document.open("text/html","replace");
-document.write(szHTML);
-document.close();
-
- fnBuildTabStrip();
-}
-
-function fnBuildTabStrip()
-{
- var szHTML=
-  "<html><head><style>.clScroll {font:8pt Courier New;color:"+c_rgszClr[2]+";cursor:default;line-height:10pt;}"+
-  ".clScroll2 {font:10pt Arial;color:"+c_rgszClr[2]+";cursor:default;line-height:11pt;}</style></head>"+
-  "<body onclick=\"event.returnValue=false;\" ondragstart=\"event.returnValue=false;\" onselectstart=\"event.returnValue=false;\" bgcolor="+c_rgszClr[4]+" topmargin=0 leftmargin=0><table cellpadding=0 cellspacing=0 width=100%>"+
-  "<tr><td colspan=6 height=1 bgcolor="+c_rgszClr[2]+"></td></tr>"+
-  "<tr><td style=\"font:1pt\">&nbsp;<td>"+
-  "<td valign=top id=tdScroll class=\"clScroll\" onclick=\"parent.fnFastScrollTabs(0);\" onmouseover=\"parent.fnMouseOverScroll(0);\" onmouseout=\"parent.fnMouseOutScroll(0);\"><a>&#171;</a></td>"+
-  "<td valign=top id=tdScroll class=\"clScroll2\" onclick=\"parent.fnScrollTabs(0);\" ondblclick=\"parent.fnScrollTabs(0);\" onmouseover=\"parent.fnMouseOverScroll(1);\" onmouseout=\"parent.fnMouseOutScroll(1);\"><a>&lt</a></td>"+
-  "<td valign=top id=tdScroll class=\"clScroll2\" onclick=\"parent.fnScrollTabs(1);\" ondblclick=\"parent.fnScrollTabs(1);\" onmouseover=\"parent.fnMouseOverScroll(2);\" onmouseout=\"parent.fnMouseOutScroll(2);\"><a>&gt</a></td>"+
-  "<td valign=top id=tdScroll class=\"clScroll\" onclick=\"parent.fnFastScrollTabs(1);\" onmouseover=\"parent.fnMouseOverScroll(3);\" onmouseout=\"parent.fnMouseOutScroll(3);\"><a>&#187;</a></td>"+
-  "<td style=\"font:1pt\">&nbsp;<td></tr></table></body></html>";
-
-frames['frScroll'].document.open("text/html","replace");
-frames['frScroll'].document.write(szHTML);
-frames['frScroll'].document.close();
-
- szHTML =
-  "<html><head>"+
-  "<style>A:link,A:visited,A:active {text-decoration:none;"+"color:"+c_rgszClr[3]+";}"+
-  ".clTab {cursor:hand;background:"+c_rgszClr[1]+";font:8pt Arial;padding-left:3px;padding-right:3px;text-align:center;}"+
-  ".clBorder {background:"+c_rgszClr[2]+";font:1pt;}"+
-  "</style></head><body onload=\"parent.fnInit();\" onselectstart=\"event.returnValue=false;\" ondragstart=\"event.returnValue=false;\" bgcolor="+c_rgszClr[4]+
-  " topmargin=0 leftmargin=0><table id=tbTabs cellpadding=0 cellspacing=0>";
-
- var iCellCount=(c_lTabs+1)*2;
-
- var i;
- for (i=0;i<iCellCount;i+=2)
-  szHTML+="<col width=1><col>";
-
- var iRow;
- for (iRow=0;iRow<6;iRow++) {
-
-  szHTML+="<tr>";
-
-  if (iRow==5)
-   szHTML+="<td colspan="+iCellCount+"></td>";
-  else {
-   if (iRow==0) {
-    for(i=0;i<iCellCount;i++)
-     szHTML+="<td height=1 class=\"clBorder\"></td>";
-   } else if (iRow==1) {
-    for(i=0;i<c_lTabs;i++) {
-     szHTML+="<td height=1 nowrap class=\"clBorder\">&nbsp;</td>";
-     szHTML+=
-      "<td id=tdTab height=1 nowrap class=\"clTab\" onmouseover=\"parent.fnMouseOverTab("+i+");\" onmouseout=\"parent.fnMouseOutTab("+i+");\">"+
-      "<a href=\""+document.all.item("shLink")[i].href+"\" target=\"frSheet\" id=aTab>&nbsp;"+c_rgszSh[i]+"&nbsp;</a></td>";
-    }
-    szHTML+="<td id=tdTab height=1 nowrap class=\"clBorder\"><a id=aTab>&nbsp;</a></td><td width=100%></td>";
-   } else if (iRow==2) {
-    for (i=0;i<c_lTabs;i++)
-     szHTML+="<td height=1></td><td height=1 class=\"clBorder\"></td>";
-    szHTML+="<td height=1></td><td height=1></td>";
-   } else if (iRow==3) {
-    for (i=0;i<iCellCount;i++)
-     szHTML+="<td height=1></td>";
-   } else if (iRow==4) {
-    for (i=0;i<c_lTabs;i++)
-     szHTML+="<td height=1 width=1></td><td height=1></td>";
-    szHTML+="<td height=1 width=1></td><td></td>";
-   }
-  }
-  szHTML+="</tr>";
- }
-
- szHTML+="</table></body></html>";
-
-frames['frTabs'].document.open("text/html","replace");
-frames['frTabs'].document.charset=document.charset;
-frames['frTabs'].document. write(szHTML);
-frames['frTabs'].document.close();
-
-}
-
-function fnInit()
-{
- if (parent.window.g_iIEVer>=4) {
-  if (document.readyState=="complete"
-   && frames['frTabs'].document.readyState=="complete")
-    {
-     g_rglTabX[0]=0;
-     var i;
-     for (i=1;i<=c_lTabs;i++)
-      with (frames['frTabs'].document.all.tbTabs.rows[1].cells[fnTabToCol(i-1)])
-       g_rglTabX[i]=offsetLeft+offsetWidth-6;
-    }
-    else
-     window.setTimeout("fnInit()",150);
-   }
-}
-
-function fnGetIEVer()
-{
- var stzAgent=navigator.userAgent;
- var iVer=parseInt(navigator.appVersion);
- if (stzAgent.indexOf("MSIE")!=-1 && iVer<4)
-  g_iIEVer=3;
- else if (stzAgent.indexOf("MSIE 4")!=-1)
-  g_iIEVer=4;
- else
-  g_iIEVer=5;
-}
-
-function fnTabToCol(iTab)
-{
- return 2*iTab+1;
-}
-
-function fnNextTab(fDir)
-{
- var iNextTab=-1;
- var i;
-
- with (frames['frTabs'].document.body) {
-  if (fDir==0) {
-   if (scrollLeft>0) {
-    for (i=0;i<c_lTabs&&g_rglTabX[i]<scrollLeft;i++);
-    if (i<c_lTabs)
-     iNextTab=i-1;
-   }
-  } else {
-   if (g_rglTabX[c_lTabs]+6>offsetWidth+scrollLeft) {
-    for (i=0;i<c_lTabs&&g_rglTabX[i]<=scrollLeft;i++);
-    if (i<c_lTabs)
-     iNextTab=i;
-   }
-  }
- }
- return iNextTab;
-}
-
-function fnScrollTabs(fDir)
-{
- var iNextTab=fnNextTab(fDir);
-
- if (iNextTab>=0) {
-  frames['frTabs'].scroll(g_rglTabX[iNextTab],0);
-  return true;
- } else
-  return false;
-}
-
-function fnFastScrollTabs(fDir)
-{
- if (c_lTabs>16)
-  frames['frTabs'].scroll(g_rglTabX[fDir?c_lTabs-1:0],0);
- else
-  if (fnScrollTabs(fDir)>0) window.setTimeout("fnFastScrollTabs("+fDir+");",5);
-}
-
-function fnSetTabProps(iTab,fActive)
-{
- var iCol=fnTabToCol(iTab);
- var i;
-
- if (iTab>=0) {
-  with (frames['frTabs'].document.all) {
-   with (tbTabs) {
-    for (i=0;i<=4;i++) {
-     with (rows[i]) {
-      if (i==0)
-       cells[iCol].style.background=c_rgszClr[fActive?0:2];
-      else if (i>0 && i<4) {
-       if (fActive) {
-        cells[iCol-1].style.background=c_rgszClr[2];
-        cells[iCol].style.background=c_rgszClr[0];
-        cells[iCol+1].style.background=c_rgszClr[2];
-       } else {
-        if (i==1) {
-         cells[iCol-1].style.background=c_rgszClr[2];
-         cells[iCol].style.background=c_rgszClr[1];
-         cells[iCol+1].style.background=c_rgszClr[2];
-        } else {
-         cells[iCol-1].style.background=c_rgszClr[4];
-         cells[iCol].style.background=c_rgszClr[(i==2)?2:4];
-         cells[iCol+1].style.background=c_rgszClr[4];
-        }
-       }
-      } else
-       cells[iCol].style.background=c_rgszClr[fActive?2:4];
-     }
-    }
-   }
-   with (aTab[iTab].style) {
-    cursor=(fActive?"default":"hand");
-    color=c_rgszClr[3];
-   }
-  }
- }
-}
-
-function fnMouseOverScroll(iCtl)
-{
- frames['frScroll'].document.all.tdScroll[iCtl].style.color=c_rgszClr[5];
-}
-
-function fnMouseOutScroll(iCtl)
-{
- frames['frScroll'].document.all.tdScroll[iCtl].style.color=c_rgszClr[2];
-}
-
-function fnMouseOverTab(iTab)
-{
- if (iTab!=g_iShCur) {
-  var iCol=fnTabToCol(iTab);
-  with (frames['frTabs'].document.all) {
-   tdTab[iTab].style.background=c_rgszClr[5];
-  }
- }
-}
-
-function fnMouseOutTab(iTab)
-{
- if (iTab>=0) {
-  var elFrom=frames['frTabs'].event.srcElement;
-  var elTo=frames['frTabs'].event.toElement;
-
-  if ((!elTo) ||
-   (elFrom.tagName==elTo.tagName) ||
-   (elTo.tagName=="A" && elTo.parentElement!=elFrom) ||
-   (elFrom.tagName=="A" && elFrom.parentElement!=elTo)) {
-
-   if (iTab!=g_iShCur) {
-    with (frames['frTabs'].document.all) {
-     tdTab[iTab].style.background=c_rgszClr[1];
-    }
-   }
-  }
- }
-}
-
-function fnSetActiveSheet(iSh)
-{
- if (iSh!=g_iShCur) {
-  fnSetTabProps(g_iShCur,false);
-  fnSetTabProps(iSh,true);
-  g_iShCur=iSh;
- }
-}
- fnGetIEVer();
- fnBuildFrameset();
-//-->
-</script>
-<![endif]><!--[if gte mso 9]><xml>
- <x:ExcelWorkbook>
-  <x:ExcelWorksheets>
-   <x:ExcelWorksheet>
-    <x:Name>Mastersdataset</x:Name>
-    <x:WorksheetSource HRef="Mastersdataset.fld/sheet001.htm"/>
-   </x:ExcelWorksheet>
-  </x:ExcelWorksheets>
-  <x:Stylesheet HRef="Mastersdataset.fld/stylesheet.css"/>
-  <x:WindowHeight>16300</x:WindowHeight>
-  <x:WindowWidth>28040</x:WindowWidth>
-  <x:WindowTopX>380</x:WindowTopX>
-  <x:WindowTopY>500</x:WindowTopY>
-  <x:ProtectStructure>False</x:ProtectStructure>
-  <x:ProtectWindows>False</x:ProtectWindows>
- </x:ExcelWorkbook>
-</xml><![endif]-->
-</head>
-
-<frameset rows="*,39" border=0 width=0 frameborder=no framespacing=0>
- <frame src="Mastersdataset.fld/sheet001.htm" name="frSheet">
- <frame src="Mastersdataset.fld/tabstrip.htm" name="frTabs" marginwidth=0 marginheight=0>
- <noframes>
-  <body>
-   <p>This page uses frames, but your browser doesn't support them.</p>
-  </body>
- </noframes>
-</frameset>
-</html>
+<table class="table table-bordered table-hover table-condensed">
+<thead><tr><th title="Field #1">HRAF culture</th>
+<th title="Field #2">Phylogenetic Tip Label</th>
+<th title="Field #3">Presence of Menstrual Taboos</th>
+<th title="Field #4">Restriction Level of Menstrual Taboos</th>
+<th title="Field #5">Latitude</th>
+<th title="Field #6">Longitude</th>
+<th title="Field #7">Subsistence Pattern</th>
+<th title="Field #8">Subsistence</th>
+<th title="Field #9">Biome</th>
+<th title="Field #10">Landscape</th>
+<th title="Field #11">Mean Monthly Temperature (Celsius)</th>
+<th title="Field #12">Temperature Predictability</th>
+<th title="Field #13">Temperature Variance</th>
+<th title="Field #14">Precipitation Variance</th>
+<th title="Field #15">Mean Monthly Precipitation (mL/m2/month)</th>
+<th title="Field #16">Precipitation Predictability</th>
+<th title="Field #17">Percentage of Men Married to More than One Wife</th>
+</tr></thead>
+<tbody><tr>
+<td>Babylonians</td>
+<td>Babylonians</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">33</td>
+<td align="right">45</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">23</td>
+<td align="right">0.640160674</td>
+<td align="right">111</td>
+<td align="right">171992938</td>
+<td align="right">7852.64</td>
+<td align="right">0.347395525</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Zuni</td>
+<td>Zuni</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">36</td>
+<td align="right">-109</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">10</td>
+<td align="right">0.57931965</td>
+<td align="right">103</td>
+<td align="right">789133236</td>
+<td align="right">41598.73</td>
+<td align="right">0.5558235</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Teda</td>
+<td>Teda</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">21</td>
+<td align="right">18</td>
+<td>Agro-Pastoralists</td>
+<td>Agriculture</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">22</td>
+<td align="right">0.641627338</td>
+<td align="right">46</td>
+<td align="right">156975917</td>
+<td align="right">5593.44</td>
+<td align="right">0.303939394</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>O&#39;odham</td>
+<td>Papago</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">32</td>
+<td align="right">-112</td>
+<td>Other Combos</td>
+<td>Agriculture</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">22</td>
+<td align="right">0.614612452</td>
+<td align="right">62</td>
+<td align="right">704821052</td>
+<td align="right">24749.74</td>
+<td align="right">0.403531842</td>
+<td align="right">27</td>
+</tr>
+<tr>
+<td>Nubians</td>
+<td>Kenuzi_Nubians</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">39</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">27</td>
+<td align="right">0.725292015</td>
+<td align="right">24</td>
+<td align="right">185140467</td>
+<td align="right">6403.37</td>
+<td align="right">0.249339973</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Aranda</td>
+<td>Aranda</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-24</td>
+<td align="right">134</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">21</td>
+<td align="right">0.591495003</td>
+<td align="right">37</td>
+<td align="right">3710057302</td>
+<td align="right">61707.63</td>
+<td align="right">0.452378106</td>
+<td align="right">60</td>
+</tr>
+<tr>
+<td>Eastern Apache</td>
+<td>Chiricahua</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">32</td>
+<td align="right">-110</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">14</td>
+<td align="right">0.605925134</td>
+<td align="right">70</td>
+<td align="right">1165794130</td>
+<td align="right">44151.73</td>
+<td align="right">0.51981461</td>
+<td align="right">18</td>
+</tr>
+<tr>
+<td>Northern Paiute</td>
+<td>Paiute_North</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">43</td>
+<td align="right">-119</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">7</td>
+<td align="right">0.550759337</td>
+<td align="right">84</td>
+<td align="right">1342878435</td>
+<td align="right">54119.16</td>
+<td align="right">0.596869848</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td>Tuareg</td>
+<td>Tuareg</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">23</td>
+<td align="right">7</td>
+<td>Agro-Pastoralists</td>
+<td>Pastoralism</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">20</td>
+<td align="right">0.637141328</td>
+<td align="right">55</td>
+<td align="right">203070726</td>
+<td align="right">5723.95</td>
+<td align="right">0.27951869</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Goajiro</td>
+<td>Goajiro</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="right">-72</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">26</td>
+<td align="right">0.858467477</td>
+<td align="right">1</td>
+<td align="right">690620975</td>
+<td align="right">25502.4</td>
+<td align="right">0.695438965</td>
+<td align="right">40</td>
+</tr>
+<tr>
+<td>Khoi</td>
+<td>Nama_Hottentot</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-28</td>
+<td align="right">17</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">19</td>
+<td align="right">0.669471417</td>
+<td align="right">11</td>
+<td align="right">386520648</td>
+<td align="right">17684.07</td>
+<td align="right">0.552160071</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Rwala Bedouin</td>
+<td>Rwala_Bedouin</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">33</td>
+<td align="right">39</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Deserts &amp; Xeric Shrublands</td>
+<td>Deserts</td>
+<td align="right">16</td>
+<td align="right">0.622996025</td>
+<td align="right">80</td>
+<td align="right">193864145</td>
+<td align="right">13405.26</td>
+<td align="right">0.459266012</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Aleut</td>
+<td>Aleut</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">55</td>
+<td align="right">-163</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Boreal Forests/Taiga</td>
+<td>Forests</td>
+<td align="right">3</td>
+<td align="right">0.647161133</td>
+<td align="right">12</td>
+<td align="right">992190434</td>
+<td align="right">81344.05</td>
+<td align="right">0.750429141</td>
+<td align="right">20</td>
+</tr>
+<tr>
+<td>Nivkhs</td>
+<td>Gilyak</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">53</td>
+<td align="right">142</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Boreal Forests/Taiga</td>
+<td>Forests</td>
+<td align="right">-3</td>
+<td align="right">0.532602438</td>
+<td align="right">230</td>
+<td align="right">1086199659</td>
+<td align="right">53529.82</td>
+<td align="right">0.636441967</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Ingalik</td>
+<td>Ingalik</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">63</td>
+<td align="right">-160</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Boreal Forests/Taiga</td>
+<td>Forests</td>
+<td align="right">-4</td>
+<td align="right">0.457029625</td>
+<td align="right">126</td>
+<td align="right">886700089</td>
+<td align="right">58884.32</td>
+<td align="right">0.664050635</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>Kaska</td>
+<td>Kaska</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">60</td>
+<td align="right">-131</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Boreal Forests/Taiga</td>
+<td>Forests</td>
+<td align="right">-5</td>
+<td align="right">0.483030316</td>
+<td align="right">109</td>
+<td align="right">1398625820</td>
+<td align="right">81754.23</td>
+<td align="right">0.711216025</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Innu</td>
+<td>Montagnais</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">50</td>
+<td align="right">-74</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Boreal Forests/Taiga</td>
+<td>Forests</td>
+<td align="right">0</td>
+<td align="right">0.533263018</td>
+<td align="right">175</td>
+<td align="right">1142304198</td>
+<td align="right">77742.71</td>
+<td align="right">0.735906007</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td>Ojibwa</td>
+<td>Saulteaux</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">52</td>
+<td align="right">-96</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Boreal Forests/Taiga</td>
+<td>Forests</td>
+<td align="right">1</td>
+<td align="right">0.503938367</td>
+<td align="right">226</td>
+<td align="right">506258689</td>
+<td align="right">42363.34</td>
+<td align="right">0.682821213</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Slavey</td>
+<td>Slave</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">61</td>
+<td align="right">-120</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Boreal Forests/Taiga</td>
+<td>Forests</td>
+<td align="right">-3</td>
+<td align="right">0.467644261</td>
+<td align="right">212</td>
+<td align="right">263255952</td>
+<td align="right">29515.94</td>
+<td align="right">0.670022065</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Saami</td>
+<td>Lapps</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">69</td>
+<td align="right">22</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Boreal Forests/Taiga</td>
+<td>Forests</td>
+<td align="right">-3</td>
+<td align="right">0.521744634</td>
+<td align="right">92</td>
+<td align="right">713389583</td>
+<td align="right">65438.05</td>
+<td align="right">0.731691465</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Mapuche</td>
+<td>Mapuche</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">-39</td>
+<td align="right">-73</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Mediterranean Forests, Woodlands, &amp; Scrub</td>
+<td>Forests</td>
+<td align="right">12</td>
+<td align="right">0.729435579</td>
+<td align="right">12</td>
+<td align="right">4295021417</td>
+<td align="right">72565.78</td>
+<td align="right">0.614944272</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td>Eastern Pomo</td>
+<td>MISSING_Pomo_Eastern</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">39</td>
+<td align="right">-123</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Mediterranean Forests, Woodlands, &amp; Scrub</td>
+<td>Forests</td>
+<td align="right">14</td>
+<td align="right">0.666567942</td>
+<td align="right">16</td>
+<td align="right">6496817890</td>
+<td align="right">63918.09</td>
+<td align="right">0.488241822</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Imperial Romans</td>
+<td>Romans</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">42</td>
+<td align="right">12</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Mediterranean Forests, Woodlands, &amp; Scrub</td>
+<td>Forests</td>
+<td align="right">15</td>
+<td align="right">0.653850112</td>
+<td align="right">40</td>
+<td align="right">1651724949</td>
+<td align="right">55827.23</td>
+<td align="right">0.58798742</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Berbers or Morocco</td>
+<td>Riffians</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">35</td>
+<td align="right">-3</td>
+<td>Agro-Pastoralists</td>
+<td>Agriculture</td>
+<td>Mediterranean Forests, Woodlands, &amp; Scrub</td>
+<td>Forests</td>
+<td align="right">19</td>
+<td align="right">0.655456608</td>
+<td align="right">35</td>
+<td align="right">374401020</td>
+<td align="right">20103.01</td>
+<td align="right">0.456040806</td>
+<td align="right">11</td>
+</tr>
+<tr>
+<td>Han Chinese</td>
+<td>Chinese</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">37</td>
+<td align="right">118</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">12</td>
+<td align="right">0.618389052</td>
+<td align="right">142</td>
+<td align="right">6707887952</td>
+<td align="right">73714.84</td>
+<td align="right">0.493192614</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Okayama</td>
+<td>Japanese</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">35</td>
+<td align="right">134</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">14</td>
+<td align="right">0.656782616</td>
+<td align="right">68</td>
+<td align="right">7394435303</td>
+<td align="right">132984.24</td>
+<td align="right">0.656782616</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Korea</td>
+<td>Koreans</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">38</td>
+<td align="right">126</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">11</td>
+<td align="right">0.676033933</td>
+<td align="right">100</td>
+<td align="right">6186705294</td>
+<td align="right">79581.2</td>
+<td align="right">0.571090278</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Manchu</td>
+<td>Manchu</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">50</td>
+<td align="right">126</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">-1</td>
+<td align="right">0.568257375</td>
+<td align="right">263</td>
+<td align="right">3547577607</td>
+<td align="right">53252.19</td>
+<td align="right">0.617193659</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Basques</td>
+<td>Basques</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">43</td>
+<td align="right">-2</td>
+<td>Agro-Pastoralists</td>
+<td>Agriculture</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">14</td>
+<td align="right">0.691022688</td>
+<td align="right">15</td>
+<td align="right">1866041422</td>
+<td align="right">72670.8</td>
+<td align="right">0.641531828</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Rural Irish</td>
+<td>Irish</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">54</td>
+<td align="right">-10</td>
+<td>Agro-Pastoralists</td>
+<td>Agriculture</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">11</td>
+<td align="right">0.748178587</td>
+<td align="right">8</td>
+<td align="right">3491045078</td>
+<td align="right">132987.16</td>
+<td align="right">0.76708049</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Huron</td>
+<td>MISSING_Huron</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">45</td>
+<td align="right">-79</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">7</td>
+<td align="right">0.668149871</td>
+<td align="right">135</td>
+<td align="right">1124859360</td>
+<td align="right">76328.79</td>
+<td align="right">0.668149871</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Creek</td>
+<td>Creek</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">33</td>
+<td align="right">-86</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">16</td>
+<td align="right">0.621906609</td>
+<td align="right">56</td>
+<td align="right">2746224264</td>
+<td align="right">104125.27</td>
+<td align="right">0.652124125</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Maori</td>
+<td>Maori</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">-35</td>
+<td align="right">174</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">17</td>
+<td align="right">0.777040984</td>
+<td align="right">9</td>
+<td align="right">2880919131</td>
+<td align="right">96335.55</td>
+<td align="right">0.621173695</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Mi&#39;kmaq</td>
+<td>Micmac</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">47</td>
+<td align="right">-65</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">6</td>
+<td align="right">0.580414978</td>
+<td align="right">118</td>
+<td align="right">1638214920</td>
+<td align="right">99384.77</td>
+<td align="right">0.708767505</td>
+<td align="right">13</td>
+</tr>
+<tr>
+<td>Yahgan</td>
+<td>Yahgan</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">-56</td>
+<td align="right">-70</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">4</td>
+<td align="right">0.718842882</td>
+<td align="right">4</td>
+<td align="right">671652292</td>
+<td align="right">107757.57</td>
+<td align="right">0.817754903</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Kurds</td>
+<td>Kurd</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">37</td>
+<td align="right">45</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Temperate Broadleaf &amp; Mixed Forests</td>
+<td>Forests</td>
+<td align="right">15</td>
+<td align="right">0.610643704</td>
+<td align="right">120</td>
+<td align="right">1516010607</td>
+<td align="right">38059.23</td>
+<td align="right">0.451745288</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>Havasupai</td>
+<td>Havasupai</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">36</td>
+<td align="right">-112</td>
+<td>Other Combos</td>
+<td>Agriculture</td>
+<td>Temperate Conifer Forests</td>
+<td>Forests</td>
+<td align="right">12</td>
+<td align="right">0.588108958</td>
+<td align="right">95</td>
+<td align="right">1623479162</td>
+<td align="right">39414.62</td>
+<td align="right">0.44606464</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>Ainu</td>
+<td>Ainu</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">44</td>
+<td align="right">144</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Conifer Forests</td>
+<td>Forests</td>
+<td align="right">7</td>
+<td align="right">0.610077986</td>
+<td align="right">108</td>
+<td align="right">3293987850</td>
+<td align="right">105774.09</td>
+<td align="right">0.702515747</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Nuxalk</td>
+<td>Bellacoola</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">52</td>
+<td align="right">-127</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Conifer Forests</td>
+<td>Forests</td>
+<td align="right">2</td>
+<td align="right">0.541918409</td>
+<td align="right">49</td>
+<td align="right">16364533162</td>
+<td align="right">192758.49</td>
+<td align="right">0.674157665</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Eyak</td>
+<td>Eyak</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">61</td>
+<td align="right">-145</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Conifer Forests</td>
+<td>Forests</td>
+<td align="right">-1</td>
+<td align="right">0.541454996</td>
+<td align="right">39</td>
+<td align="right">6981751820</td>
+<td align="right">174457.36</td>
+<td align="right">0.667805767</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Haida</td>
+<td>Haida</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">54</td>
+<td align="right">-133</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Conifer Forests</td>
+<td>Forests</td>
+<td align="right">7</td>
+<td align="right">0.633101313</td>
+<td align="right">12</td>
+<td align="right">4443168997</td>
+<td align="right">110998.47</td>
+<td align="right">0.709648746</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Klamath</td>
+<td>MISSING_Klamath</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">43</td>
+<td align="right">-122</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Conifer Forests</td>
+<td>Forests</td>
+<td align="right">8</td>
+<td align="right">0.568131431</td>
+<td align="right">50</td>
+<td align="right">15025939486</td>
+<td align="right">133841.31</td>
+<td align="right">0.582081243</td>
+<td align="right">20</td>
+</tr>
+<tr>
+<td>Yurok</td>
+<td>MISSING_Yurok</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">42</td>
+<td align="right">-124</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Conifer Forests</td>
+<td>Forests</td>
+<td align="right">12</td>
+<td align="right">0.65134887</td>
+<td align="right">13</td>
+<td align="right">10790474701</td>
+<td align="right">101372.28</td>
+<td align="right">0.587750387</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>Santal</td>
+<td>Santal</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">24</td>
+<td align="right">87</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Dry Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">25</td>
+<td align="right">0.642094263</td>
+<td align="right">33</td>
+<td align="right">14510681796</td>
+<td align="right">113006.54</td>
+<td align="right">0.486404492</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Nahua</td>
+<td>Aztec</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">19</td>
+<td align="right">-99</td>
+<td>Other Combos</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Dry Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">14</td>
+<td align="right">0.760565231</td>
+<td align="right">6</td>
+<td align="right">8269156567</td>
+<td align="right">119352.15</td>
+<td align="right">0.658068088</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Alorese</td>
+<td>Alorese</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-8</td>
+<td align="right">125</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Dry Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.834456265</td>
+<td align="right">0</td>
+<td align="right">23833377925</td>
+<td align="right">168015.15</td>
+<td align="right">0.604145283</td>
+<td align="right">27</td>
+</tr>
+<tr>
+<td>Huichol</td>
+<td>Huichol</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">22</td>
+<td align="right">-105</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Dry Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">23</td>
+<td align="right">0.80148585</td>
+<td align="right">4</td>
+<td align="right">16962515259</td>
+<td align="right">140587.69</td>
+<td align="right">0.589552149</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Yapese</td>
+<td>Yapese</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="right">138</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Dry Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">28</td>
+<td align="right">0.843143845</td>
+<td align="right">0</td>
+<td align="right">11339982121</td>
+<td align="right">240615.97</td>
+<td align="right">0.685111424</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Vedda</td>
+<td>Vedda</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">81</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Dry Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.823363068</td>
+<td align="right">1</td>
+<td align="right">20512809565</td>
+<td align="right">184632.91</td>
+<td align="right">0.632752036</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Balinese</td>
+<td>Balinese</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">-9</td>
+<td align="right">115</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.835891421</td>
+<td align="right">1</td>
+<td align="right">15887286508</td>
+<td align="right">177016.72</td>
+<td align="right">0.625700618</td>
+<td align="right">18</td>
+</tr>
+<tr>
+<td>Burmans</td>
+<td>Burmese</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">22</td>
+<td align="right">96</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">23</td>
+<td align="right">0.693668726</td>
+<td align="right">17</td>
+<td align="right">13002196174</td>
+<td align="right">101497.28</td>
+<td align="right">0.534675439</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Javanese</td>
+<td>Javanese</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-8</td>
+<td align="right">112</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.814093763</td>
+<td align="right">0</td>
+<td align="right">15377980634</td>
+<td align="right">188300.98</td>
+<td align="right">0.654488941</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Kapauku</td>
+<td>Kapauku</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">-4</td>
+<td align="right">136</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.849195744</td>
+<td align="right">0</td>
+<td align="right">29213650732</td>
+<td align="right">330068.14</td>
+<td align="right">0.653550567</td>
+<td align="right">31</td>
+</tr>
+<tr>
+<td>Cambodians</td>
+<td>Khmer</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">12</td>
+<td align="right">105</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">25</td>
+<td align="right">0.739226829</td>
+<td align="right">3</td>
+<td align="right">22299796285</td>
+<td align="right">186258.22</td>
+<td align="right">0.683406944</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Yi</td>
+<td>Lolo</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">28</td>
+<td align="right">104</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">10</td>
+<td align="right">0.675058953</td>
+<td align="right">44</td>
+<td align="right">7338060720</td>
+<td align="right">108919.25</td>
+<td align="right">0.664730881</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>Kimam</td>
+<td>MISSING_Kimam</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">-8</td>
+<td align="right">139</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.835337738</td>
+<td align="right">1</td>
+<td align="right">13856923015</td>
+<td align="right">175932.42</td>
+<td align="right">0.648898766</td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td>Quiche Maya</td>
+<td>Quiche</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">15</td>
+<td align="right">-91</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.777626739</td>
+<td align="right">3</td>
+<td align="right">9210797676</td>
+<td align="right">90766.67</td>
+<td align="right">0.676147291</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Central Thai</td>
+<td>Siamese</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">101</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.710509079</td>
+<td align="right">9</td>
+<td align="right">20087073747</td>
+<td align="right">149789.93</td>
+<td align="right">0.668414215</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Tanala</td>
+<td>Tanala</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">-22</td>
+<td align="right">48</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">21</td>
+<td align="right">0.782051936</td>
+<td align="right">6</td>
+<td align="right">10140991395</td>
+<td align="right">117686.56</td>
+<td align="right">0.64028757</td>
+<td align="right">31</td>
+</tr>
+<tr>
+<td>Vietnamese</td>
+<td>Vietnamese</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">21</td>
+<td align="right">106</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">21</td>
+<td align="right">0.694632321</td>
+<td align="right">32</td>
+<td align="right">10912991575</td>
+<td align="right">113964.15</td>
+<td align="right">0.620375247</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Akan</td>
+<td>Ashanti</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="right">-2</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.76971966</td>
+<td align="right">2</td>
+<td align="right">6752452184</td>
+<td align="right">116988</td>
+<td align="right">0.696104421</td>
+<td align="right">49</td>
+</tr>
+<tr>
+<td>Aymara</td>
+<td>Aymara</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-16</td>
+<td align="right">-66</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">18</td>
+<td align="right">0.746889376</td>
+<td align="right">4</td>
+<td align="right">31254400384</td>
+<td align="right">233882.15</td>
+<td align="right">0.658866592</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Kuna</td>
+<td>Cuna_Tule</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="right">-79</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.844883836</td>
+<td align="right">0</td>
+<td align="right">21744630225</td>
+<td align="right">156628.37</td>
+<td align="right">0.754203495</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Garo</td>
+<td>Garo</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">26</td>
+<td align="right">91</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">23</td>
+<td align="right">0.676833729</td>
+<td align="right">27</td>
+<td align="right">15283382412</td>
+<td align="right">116149.27</td>
+<td align="right">0.503631168</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td>Iban</td>
+<td>Iban</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">113</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.85501586</td>
+<td align="right">0</td>
+<td align="right">11016841047</td>
+<td align="right">241816.67</td>
+<td align="right">0.684465027</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Igbo</td>
+<td>Ibo</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">7</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">25</td>
+<td align="right">0.784091609</td>
+<td align="right">2</td>
+<td align="right">8374543041</td>
+<td align="right">138728.19</td>
+<td align="right">0.705665753</td>
+<td align="right">24</td>
+</tr>
+<tr>
+<td>Jivaro</td>
+<td>Jivaro</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-3</td>
+<td align="right">-78</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">21</td>
+<td align="right">0.776108034</td>
+<td align="right">1</td>
+<td align="right">8841008874</td>
+<td align="right">118612.38</td>
+<td align="right">0.713244058</td>
+<td align="right">50</td>
+</tr>
+<tr>
+<td>Mara</td>
+<td>Lakher</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">22</td>
+<td align="right">93</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">22</td>
+<td align="right">0.721559698</td>
+<td align="right">18</td>
+<td align="right">13169633272</td>
+<td align="right">110430.32</td>
+<td align="right">0.585944256</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Mende</td>
+<td>Mende</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="right">-12</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">25</td>
+<td align="right">0.817180001</td>
+<td align="right">1</td>
+<td align="right">57923937221</td>
+<td align="right">235053.32</td>
+<td align="right">0.697608287</td>
+<td align="right">90</td>
+</tr>
+<tr>
+<td>Mongo</td>
+<td>Nkundo_Mongo</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">19</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">23</td>
+<td align="right">0.81980859</td>
+<td align="right">0</td>
+<td align="right">7122628458</td>
+<td align="right">196079.76</td>
+<td align="right">0.7877248</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Eastern Toraja</td>
+<td>Toradja</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-2</td>
+<td align="right">121</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">23</td>
+<td align="right">0.842534407</td>
+<td align="right">0</td>
+<td align="right">14773302749</td>
+<td align="right">245748.54</td>
+<td align="right">0.669679837</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Samoans</td>
+<td>Western_Samoans</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-14</td>
+<td align="right">-172</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.84497839</td>
+<td align="right">1</td>
+<td align="right">12213542079</td>
+<td align="right">219723.26</td>
+<td align="right">0.677829062</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Yanomami</td>
+<td>Yanomamo</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">-65</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">23</td>
+<td align="right">0.7939747</td>
+<td align="right">0</td>
+<td align="right">18950462637</td>
+<td align="right">190459.49</td>
+<td align="right">0.692074174</td>
+<td align="right">38</td>
+</tr>
+<tr>
+<td>Siwai</td>
+<td>Siuai</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-7</td>
+<td align="right">155</td>
+<td>Agro-Pastoralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.85913973</td>
+<td align="right">0</td>
+<td align="right">16864903667</td>
+<td align="right">289372.46</td>
+<td align="right">0.72167192</td>
+<td align="right">14</td>
+</tr>
+<tr>
+<td>Tsonga</td>
+<td>Thonga</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">-26</td>
+<td align="right">32</td>
+<td>Agro-Pastoralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">18</td>
+<td align="right">0.718662611</td>
+<td align="right">9</td>
+<td align="right">12418251664</td>
+<td align="right">134197.58</td>
+<td align="right">0.634970748</td>
+<td align="right">40</td>
+</tr>
+<tr>
+<td>Amahuaca</td>
+<td>Amahuaca</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-10</td>
+<td align="right">-72</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.748946486</td>
+<td align="right">1</td>
+<td align="right">5823699641</td>
+<td align="right">114339.03</td>
+<td align="right">0.726753273</td>
+<td align="right">50</td>
+</tr>
+<tr>
+<td>Talamancans</td>
+<td>Bribri</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="right">-83</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.8055649</td>
+<td align="right">0</td>
+<td align="right">13672070334</td>
+<td align="right">112754.13</td>
+<td align="right">0.737767558</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Tukano</td>
+<td>Cubeo_Tucano</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">-71</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.808392515</td>
+<td align="right">0</td>
+<td align="right">8701186359</td>
+<td align="right">248037.87</td>
+<td align="right">0.816894928</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>Gond</td>
+<td>Gond</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">20</td>
+<td align="right">81</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">23</td>
+<td align="right">0.691012822</td>
+<td align="right">18</td>
+<td align="right">24696382253</td>
+<td align="right">132169.32</td>
+<td align="right">0.549625275</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Kwoma</td>
+<td>Kwoma</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-4</td>
+<td align="right">143</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">21</td>
+<td align="right">0.8395235</td>
+<td align="right">0</td>
+<td align="right">23857301913</td>
+<td align="right">375291.93</td>
+<td align="right">0.758307521</td>
+<td align="right">38</td>
+</tr>
+<tr>
+<td>Marquesas</td>
+<td>Marquesans</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-9</td>
+<td align="right">-140</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.787867357</td>
+<td align="right">0</td>
+<td align="right">22176393604</td>
+<td align="right">154798.14</td>
+<td align="right">0.638503399</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Marshallese</td>
+<td>Marshallese</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">169</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">28</td>
+<td align="right">0.856103189</td>
+<td align="right">0</td>
+<td align="right">17777078999</td>
+<td align="right">302548.23</td>
+<td align="right">0.6959807</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Saramaka</td>
+<td>Saramacca</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">-56</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">25</td>
+<td align="right">0.724681911</td>
+<td align="right">2</td>
+<td align="right">7982395717</td>
+<td align="right">98884.88</td>
+<td align="right">0.726687272</td>
+<td align="right">60</td>
+</tr>
+<tr>
+<td>Tikopia</td>
+<td>Tikopia</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-12</td>
+<td align="right">169</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.844851678</td>
+<td align="right">1</td>
+<td align="right">15697970977</td>
+<td align="right">239613.6</td>
+<td align="right">0.677857147</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Trobriands</td>
+<td>Trobrianders</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-9</td>
+<td align="right">151</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.848110871</td>
+<td align="right">1</td>
+<td align="right">12473689601</td>
+<td align="right">206628.76</td>
+<td align="right">0.672301215</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Chuuk</td>
+<td>Trukese</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="right">152</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">28</td>
+<td align="right">0.854249051</td>
+<td align="right">0</td>
+<td align="right">18619153518</td>
+<td align="right">281260.56</td>
+<td align="right">0.697768963</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Andamans</td>
+<td>Andamanese</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">12</td>
+<td align="right">93</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.805758564</td>
+<td align="right">2</td>
+<td align="right">31205924957</td>
+<td align="right">159977.04</td>
+<td align="right">0.589804953</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Sama-Bajau</td>
+<td>Badjau</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">120</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.842628436</td>
+<td align="right">0</td>
+<td align="right">9218356714</td>
+<td align="right">210298.77</td>
+<td align="right">0.699791859</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Island Carib</td>
+<td>Callinago</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">15</td>
+<td align="right">-61</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.853289992</td>
+<td align="right">1</td>
+<td align="right">1681700105</td>
+<td align="right">41612.62</td>
+<td align="right">0.637897047</td>
+<td align="right">30</td>
+</tr>
+<tr>
+<td>Barama River Carib</td>
+<td>Carib_Barama</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="right">-60</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">25</td>
+<td align="right">0.784225637</td>
+<td align="right">1</td>
+<td align="right">3196062741</td>
+<td align="right">82988.23</td>
+<td align="right">0.797256885</td>
+<td align="right">20</td>
+</tr>
+<tr>
+<td>Kiribati</td>
+<td>Gilbertese</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">173</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.80060325</td>
+<td align="right">0</td>
+<td align="right">23456572588</td>
+<td align="right">209493.38</td>
+<td align="right">0.559455676</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Manus</td>
+<td>Manus</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-2</td>
+<td align="right">147</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">28</td>
+<td align="right">0.842232695</td>
+<td align="right">0</td>
+<td align="right">10765114054</td>
+<td align="right">219223.79</td>
+<td align="right">0.625105769</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Mbuti</td>
+<td>Mbuti</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">28</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">21</td>
+<td align="right">0.816795745</td>
+<td align="right">0</td>
+<td align="right">8474274385</td>
+<td align="right">246503.22</td>
+<td align="right">0.784538547</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td>Miskito</td>
+<td>Miskito</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">15</td>
+<td align="right">-83</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.856405403</td>
+<td align="right">1</td>
+<td align="right">3617435018</td>
+<td align="right">75804.74</td>
+<td align="right">0.715106202</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Semang</td>
+<td>Semang</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">101</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">25</td>
+<td align="right">0.830861754</td>
+<td align="right">1</td>
+<td align="right">23289771427</td>
+<td align="right">241032.26</td>
+<td align="right">0.682639897</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Siriono</td>
+<td>Siriono</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-15</td>
+<td align="right">-64</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">27</td>
+<td align="right">0.699749967</td>
+<td align="right">3</td>
+<td align="right">6801139023</td>
+<td align="right">99838.91</td>
+<td align="right">0.627940061</td>
+<td align="right">28</td>
+</tr>
+<tr>
+<td>Trumai</td>
+<td>Trumai</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-12</td>
+<td align="right">-54</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.750440693</td>
+<td align="right">4</td>
+<td align="right">16468389692</td>
+<td align="right">138303.4</td>
+<td align="right">0.616533436</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td>Tupinamba</td>
+<td>Tupinamba</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-23</td>
+<td align="right">-45</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">19</td>
+<td align="right">0.726463941</td>
+<td align="right">8</td>
+<td align="right">9477828432</td>
+<td align="right">119486.36</td>
+<td align="right">0.650196306</td>
+<td align="right">30</td>
+</tr>
+<tr>
+<td>Warao</td>
+<td>Warrau</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">9</td>
+<td align="right">-62</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">26</td>
+<td align="right">0.833988352</td>
+<td align="right">1</td>
+<td align="right">2053100779</td>
+<td align="right">60798.89</td>
+<td align="right">0.776031139</td>
+<td align="right">60</td>
+</tr>
+<tr>
+<td>Chachi</td>
+<td>Cayapa</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-79</td>
+<td>Other Combos</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">23</td>
+<td align="right">0.783821885</td>
+<td align="right">0</td>
+<td align="right">16219626157</td>
+<td align="right">256564.75</td>
+<td align="right">0.730143807</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Toda</td>
+<td>Toda</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">12</td>
+<td align="right">77</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Tropical &amp; Subtropical Moist Broadleaf Forests</td>
+<td>Forests</td>
+<td align="right">24</td>
+<td align="right">0.79479302</td>
+<td align="right">2</td>
+<td align="right">36643643801</td>
+<td align="right">196914.37</td>
+<td align="right">0.636273301</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Fellahin</td>
+<td>Egyptians</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">25</td>
+<td align="right">33</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Flooded Grasslands &amp; Savannas</td>
+<td>Grasslands</td>
+<td align="right">24</td>
+<td align="right">0.657733079</td>
+<td align="right">56</td>
+<td align="right">61013724</td>
+<td align="right">2906.47</td>
+<td align="right">0.351085543</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>Lozi</td>
+<td>Lozi</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-16</td>
+<td align="right">24</td>
+<td>Other Combos</td>
+<td>Agriculture</td>
+<td>Flooded Grasslands &amp; Savannas</td>
+<td>Grasslands</td>
+<td align="right">22</td>
+<td align="right">0.715611495</td>
+<td align="right">11</td>
+<td align="right">16848707242</td>
+<td align="right">105957.49</td>
+<td align="right">0.515210058</td>
+<td align="right">40</td>
+</tr>
+<tr>
+<td>Amhara</td>
+<td>Amhara</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">13</td>
+<td align="right">38</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Montane Grasslands &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">20</td>
+<td align="right">0.722535314</td>
+<td align="right">4</td>
+<td align="right">7102274111</td>
+<td align="right">73701.4</td>
+<td align="right">0.519560893</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Inka</td>
+<td>Inca</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-14</td>
+<td align="right">-72</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Montane Grasslands &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">3</td>
+<td align="right">0.730279602</td>
+<td align="right">3</td>
+<td align="right">41396047734</td>
+<td align="right">308214.49</td>
+<td align="right">0.820655606</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>Lepcha</td>
+<td>Lepcha</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">28</td>
+<td align="right">89</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Montane Grasslands &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">8</td>
+<td align="right">0.69638479</td>
+<td align="right">39</td>
+<td align="right">96491128664</td>
+<td align="right">253037.73</td>
+<td align="right">0.534284911</td>
+<td align="right">21</td>
+</tr>
+<tr>
+<td>Nyakyusa and Ngonde</td>
+<td>Nyakyusa</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">-10</td>
+<td align="right">34</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Montane Grasslands &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">18</td>
+<td align="right">0.752033892</td>
+<td align="right">8</td>
+<td align="right">14085952159</td>
+<td align="right">110479.41</td>
+<td align="right">0.728508561</td>
+<td align="right">44</td>
+</tr>
+<tr>
+<td>Armenia</td>
+<td>Armenians</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">40</td>
+<td align="right">45</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">7</td>
+<td align="right">0.583140594</td>
+<td align="right">95</td>
+<td align="right">947079950</td>
+<td align="right">47323.33</td>
+<td align="right">0.653814772</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Hidatsa</td>
+<td>Hidatsa</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">47</td>
+<td align="right">-101</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">7</td>
+<td align="right">0.508878774</td>
+<td align="right">188</td>
+<td align="right">766656465</td>
+<td align="right">37897.46</td>
+<td align="right">0.633481258</td>
+<td align="right">90</td>
+</tr>
+<tr>
+<td>Pawnee</td>
+<td>Pawnee</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">42</td>
+<td align="right">-100</td>
+<td>Other Combos</td>
+<td>Horticulture</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">10</td>
+<td align="right">0.526247596</td>
+<td align="right">141</td>
+<td align="right">1386862473</td>
+<td align="right">49431.81</td>
+<td align="right">0.613605807</td>
+<td align="right">54</td>
+</tr>
+<tr>
+<td>Comanche</td>
+<td>Comanche</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">34</td>
+<td align="right">-102</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">15</td>
+<td align="right">0.568641162</td>
+<td align="right">95</td>
+<td align="right">1583535098</td>
+<td align="right">60381.73</td>
+<td align="right">0.575382605</td>
+<td align="right">25</td>
+</tr>
+<tr>
+<td>Gros Ventre</td>
+<td>Gros_Ventre</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">48</td>
+<td align="right">-108</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">7</td>
+<td align="right">0.509995463</td>
+<td align="right">149</td>
+<td align="right">590114282</td>
+<td align="right">38480.41</td>
+<td align="right">0.658103503</td>
+<td align="right">40</td>
+</tr>
+<tr>
+<td>Omaha</td>
+<td>MISSING_Omaha</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">41</td>
+<td align="right">-97</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">12</td>
+<td align="right">0.524770885</td>
+<td align="right">161</td>
+<td align="right">1387105739</td>
+<td align="right">53964.64</td>
+<td align="right">0.616569554</td>
+<td align="right">35</td>
+</tr>
+<tr>
+<td>Tehuelche</td>
+<td>Tehuelche</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">-41</td>
+<td align="right">-68</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">8</td>
+<td align="right">0.651734691</td>
+<td align="right">37</td>
+<td align="right">602182954</td>
+<td align="right">42585.36</td>
+<td align="right">0.61734263</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Yokuts</td>
+<td>Yokuts_Lake</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">35</td>
+<td align="right">-120</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">17</td>
+<td align="right">0.6188898</td>
+<td align="right">29</td>
+<td align="right">2700143356</td>
+<td align="right">32750.65</td>
+<td align="right">0.419393038</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Kazakh</td>
+<td>Kazak</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">43</td>
+<td align="right">76</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Temperate Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">3</td>
+<td align="right">0.57909679</td>
+<td align="right">120</td>
+<td align="right">861589161</td>
+<td align="right">40559.54</td>
+<td align="right">0.624230961</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>Ganda</td>
+<td>Ganda</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">33</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">22</td>
+<td align="right">0.779701391</td>
+<td align="right">1</td>
+<td align="right">15279696081</td>
+<td align="right">136714.31</td>
+<td align="right">0.604572546</td>
+<td align="right">55</td>
+</tr>
+<tr>
+<td>Gikuyu</td>
+<td>Kikuyu</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">37</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">18</td>
+<td align="right">0.772535365</td>
+<td align="right">1</td>
+<td align="right">2391993146</td>
+<td align="right">48525.62</td>
+<td align="right">0.669648678</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Nuba</td>
+<td>Otoro_Nuba</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">11</td>
+<td align="right">31</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">26</td>
+<td align="right">0.720400228</td>
+<td align="right">4</td>
+<td align="right">5077602208</td>
+<td align="right">78687.65</td>
+<td align="right">0.654283409</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Songhai</td>
+<td>Songhai</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">17</td>
+<td align="right">-2</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">27</td>
+<td align="right">0.669153854</td>
+<td align="right">30</td>
+<td align="right">777977038</td>
+<td align="right">18839.65</td>
+<td align="right">0.579141479</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Tallensi</td>
+<td>Tallensi</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">11</td>
+<td align="right">-1</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">26</td>
+<td align="right">0.727287881</td>
+<td align="right">4</td>
+<td align="right">8784440210</td>
+<td align="right">87246.74</td>
+<td align="right">0.634377422</td>
+<td align="right">40</td>
+</tr>
+<tr>
+<td>Bambara</td>
+<td>Bambara</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">13</td>
+<td align="right">-7</td>
+<td>Agro-Pastoralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">26</td>
+<td align="right">0.715705273</td>
+<td align="right">7</td>
+<td align="right">9041559139</td>
+<td align="right">80352.36</td>
+<td align="right">0.645309212</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Masa</td>
+<td>Massa_Masa</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">11</td>
+<td align="right">16</td>
+<td>Agro-Pastoralists</td>
+<td>Agriculture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">26</td>
+<td align="right">0.721990878</td>
+<td align="right">4</td>
+<td align="right">6003048458</td>
+<td align="right">77687.36</td>
+<td align="right">0.651249858</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Azande</td>
+<td>Azande</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">28</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">22</td>
+<td align="right">0.776169832</td>
+<td align="right">1</td>
+<td align="right">12359177298</td>
+<td align="right">177589.06</td>
+<td align="right">0.706924385</td>
+<td align="right">32</td>
+</tr>
+<tr>
+<td>Bemba</td>
+<td>Bemba</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-11</td>
+<td align="right">31</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">18</td>
+<td align="right">0.751397474</td>
+<td align="right">9</td>
+<td align="right">20553738597</td>
+<td align="right">126297.48</td>
+<td align="right">0.719558678</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Fon</td>
+<td>Fon</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="right">2</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">25</td>
+<td align="right">0.772019014</td>
+<td align="right">1</td>
+<td align="right">7891901482</td>
+<td align="right">118937.91</td>
+<td align="right">0.672336889</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Luguru</td>
+<td>Luguru</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">-7</td>
+<td align="right">38</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">21</td>
+<td align="right">0.808886348</td>
+<td align="right">4</td>
+<td align="right">5819966558</td>
+<td align="right">116820.56</td>
+<td align="right">0.707984455</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Ovimbundu</td>
+<td>Mbundu</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">-12</td>
+<td align="right">17</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">18</td>
+<td align="right">0.741032035</td>
+<td align="right">3</td>
+<td align="right">13661008540</td>
+<td align="right">122664.13</td>
+<td align="right">0.569825805</td>
+<td align="right">27</td>
+</tr>
+<tr>
+<td>Tiv</td>
+<td>Tiv</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">9</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">24</td>
+<td align="right">0.770463564</td>
+<td align="right">2</td>
+<td align="right">12760382786</td>
+<td align="right">150153.63</td>
+<td align="right">0.650224499</td>
+<td align="right">20</td>
+</tr>
+<tr>
+<td>Wolof</td>
+<td>Wolof</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">14</td>
+<td align="right">-15</td>
+<td>Horticultralists</td>
+<td>Horticulture</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">27</td>
+<td align="right">0.770896687</td>
+<td align="right">3</td>
+<td align="right">950682474</td>
+<td align="right">20853.2</td>
+<td align="right">0.550238113</td>
+<td align="right">39</td>
+</tr>
+<tr>
+<td>Hadza</td>
+<td>Hadza</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-4</td>
+<td align="right">35</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">19</td>
+<td align="right">0.741498826</td>
+<td align="right">3</td>
+<td align="right">10440323091</td>
+<td align="right">86607.66</td>
+<td align="right">0.667924294</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td>San</td>
+<td>Kung_Bushmen</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-20</td>
+<td align="right">21</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">21</td>
+<td align="right">0.663742143</td>
+<td align="right">15</td>
+<td align="right">11601735251</td>
+<td align="right">87000</td>
+<td align="right">0.478079126</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>Enxet and Enlhet</td>
+<td>Lengua</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-23</td>
+<td align="right">-59</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">25</td>
+<td align="right">0.628947046</td>
+<td align="right">13</td>
+<td align="right">6264653158</td>
+<td align="right">97963.02</td>
+<td align="right">0.608324256</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>Nambicuara</td>
+<td>MISSING_Nambicuara</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">-13</td>
+<td align="right">-59</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">24</td>
+<td align="right">0.724191694</td>
+<td align="right">3</td>
+<td align="right">11398012340</td>
+<td align="right">120205.15</td>
+<td align="right">0.622984362</td>
+<td align="right">31</td>
+</tr>
+<tr>
+<td>Xavante</td>
+<td>Shavante</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-14</td>
+<td align="right">-52</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">25</td>
+<td align="right">0.706246565</td>
+<td align="right">4</td>
+<td align="right">15093364988</td>
+<td align="right">118024.23</td>
+<td align="right">0.585009656</td>
+<td align="right">24</td>
+</tr>
+<tr>
+<td>Tiwi</td>
+<td>Tiwi</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">-11</td>
+<td align="right">131</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">27</td>
+<td align="right">0.809061767</td>
+<td align="right">2</td>
+<td align="right">27168025880</td>
+<td align="right">148308.81</td>
+<td align="right">0.604742188</td>
+<td align="right">70</td>
+</tr>
+<tr>
+<td>Maasai</td>
+<td>Masai</td>
+<td>0</td>
+<td align="right">0</td>
+<td align="right">-4</td>
+<td align="right">37</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">19</td>
+<td align="right">0.75700962</td>
+<td align="right">3</td>
+<td align="right">4960612801</td>
+<td align="right">71294.37</td>
+<td align="right">0.696066264</td>
+<td align="right">41</td>
+</tr>
+<tr>
+<td>Fulani</td>
+<td>Pastoral_Fulani</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">15</td>
+<td align="right">8</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">25</td>
+<td align="right">0.6750865</td>
+<td align="right">21</td>
+<td align="right">2377791781</td>
+<td align="right">35297.96</td>
+<td align="right">0.58098193</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Somali</td>
+<td>Somali</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="right">47</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Tropical &amp; Subtropical Grasslands, Savannas, &amp; Shrublands</td>
+<td>Grasslands</td>
+<td align="right">23</td>
+<td align="right">0.723550239</td>
+<td align="right">7</td>
+<td align="right">1958075071</td>
+<td align="right">38064.72</td>
+<td align="right">0.598009921</td>
+<td align="right">43</td>
+</tr>
+<tr>
+<td>Burusho</td>
+<td>Burusho</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">36</td>
+<td align="right">75</td>
+<td>Intensive Agricultralists</td>
+<td>Agriculture</td>
+<td>Ice</td>
+<td>Tundra</td>
+<td align="right">-10</td>
+<td align="right">0.575711386</td>
+<td align="right">135</td>
+<td align="right">2968959468</td>
+<td align="right">76644.64</td>
+<td align="right">0.600620664</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>Copper Inuit</td>
+<td>Copper_Eskimo</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">69</td>
+<td align="right">-113</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tundra</td>
+<td>Tundra</td>
+<td align="right">-14</td>
+<td align="right">0.434701346</td>
+<td align="right">287</td>
+<td align="right">183123377</td>
+<td align="right">23707.47</td>
+<td align="right">0.676987644</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Yukaghir</td>
+<td>Yukaghir</td>
+<td>1</td>
+<td align="right">1</td>
+<td align="right">65</td>
+<td align="right">154</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tundra</td>
+<td>Tundra</td>
+<td align="right">-14</td>
+<td align="right">0.467298378</td>
+<td align="right">361</td>
+<td align="right">349239596</td>
+<td align="right">32568.67</td>
+<td align="right">0.652616472</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>Nenets</td>
+<td>Yurak_Samoyed</td>
+<td>1</td>
+<td align="right">2</td>
+<td align="right">68</td>
+<td align="right">52</td>
+<td>Hunter-Gatherers</td>
+<td>Hunter-Gatherers</td>
+<td>Tundra</td>
+<td>Tundra</td>
+<td align="right">-5</td>
+<td align="right">0.459163422</td>
+<td align="right">145</td>
+<td align="right">418058681</td>
+<td align="right">42108.24</td>
+<td align="right">0.686769175</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>Chukchee</td>
+<td>Chukchee</td>
+<td>1</td>
+<td align="right">3</td>
+<td align="right">67</td>
+<td align="right">180</td>
+<td>Pastoralists</td>
+<td>Pastoralism</td>
+<td>Tundra</td>
+<td>Tundra</td>
+<td align="right">-14</td>
+<td align="right">0.4673705</td>
+<td align="right">159</td>
+<td align="right">715301571</td>
+<td align="right">50583.29</td>
+<td align="right">0.623083252</td>
+<td align="right">33</td>
+</tr>
+</tbody></table>
