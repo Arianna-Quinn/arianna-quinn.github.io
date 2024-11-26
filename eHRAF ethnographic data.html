@@ -11470,6 +11470,46 @@ span.msoDel
 div.WordSection1
 	{page:WordSection1;}
 -->
+	/* Styling the header */
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+    }
+    
+/* Styling the Back to Home button */
+    #back-to-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #back-to-home:hover {
+      background-color: #218838;
+    }
+    
+    /* Styling the Back to Top button */
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      display: none; /* Hidden by default */
+    }
+
+    #back-to-top:hover {
+      background-color: #0056b3;
+    }
 </style>
 <!--[if gte mso 10]>
 <style>
@@ -27706,6 +27746,9 @@ padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><o:p>&nbsp;</o:p></p>
 	
 </div>
 
+ <!-- Back to Home button -->
+  <button id="back-to-home" onclick="goHome()">Back to Home</button>
+
   <!-- Back to Top button -->
   <button id="back-to-top" onclick="scrollToTop()">Back to Top</button>
 
@@ -27726,9 +27769,9 @@ padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><o:p>&nbsp;</o:p></p>
 
     // Function to navigate back to the homepage
     function goHome() {
-      window.location.href = "index.html";  // Adjust this URL if needed
+      window.location.href = "https://arianna-quinn.github.io/";  // Adjust this URL if needed
     }
-</script>
+  </script>
 	
 </body>
 
