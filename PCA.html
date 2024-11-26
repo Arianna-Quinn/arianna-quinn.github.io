@@ -92,7 +92,7 @@ button:hover {
 // Show the "Back to Top" button when scrolling down
 window.onscroll = function() {
     var backToTopBtn = document.getElementById("back-to-top");
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 20) {
         backToTopBtn.style.display = "block";
     } else {
         backToTopBtn.style.display = "none";
