@@ -1,3 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Webpage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    /* Styling the header */
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+    }
+
+    /* Styling the Back to Top button */
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      display: none; /* Hidden by default */
+    }
+
+    #back-to-top:hover {
+      background-color: #0056b3;
+    }
+
+    /* Styling the Back to Home button */
+    #back-to-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #back-to-home:hover {
+      background-color: #218838;
+    }
+
+    /* Content section */
+    .content {
+      height: 2000px; /* To make the page scrollable */
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Title Header -->
+  <h1>Dataset to Run R Code</h1>
+
+
+<div class="content">
 <table class="table table-bordered table-hover table-condensed">
 <thead><tr><th title="Field #1">HRAF culture</th>
 <th title="Field #2">Phylogenetic Tip Label</th>
@@ -2754,3 +2820,34 @@
 <td align="right">33</td>
 </tr>
 </tbody></table>
+</div>
+    
+  <!-- Back to Home button -->
+  <button id="back-to-home" onclick="goHome()">Back to Home</button>
+
+  <!-- Back to Top button -->
+  <button id="back-to-top" onclick="scrollToTop()">Back to Top</button>
+
+  <script>
+    // Show or hide the Back to Top button based on scroll position
+    window.onscroll = function() {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        document.getElementById("back-to-top").style.display = "block";
+      } else {
+        document.getElementById("back-to-top").style.display = "none";
+      }
+    };
+
+    // Function to scroll to the top of the page
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Function to navigate back to the homepage
+    function goHome() {
+      window.location.href = "index.html";  // Adjust this URL if needed
+    }
+  </script>
+
+</body>
+</html>
