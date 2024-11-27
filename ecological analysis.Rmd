@@ -1,0 +1,1242 @@
+---
+title: "Ecological Analysis"
+output:
+  html_document:
+    df_print: default
+  html_notebook: default
+  pdf_document: default
+  word_document: default
+---
+
+#PACKAGE LOADING
+
+```{r}
+#Load packages
+library(phytools) #Read in phylogeny
+library(psych) #fa.parallel function
+library(GPArotation) #Rotates PCA for easier interpretation 
+library(corpcor) #Helps with centering around the ancestral mean for pPCA
+library(ape) #For the phylo.vcv function
+library(brms) #For bayesian model building
+library(geiger) #For name.check function
+library(mice) #For missing data imputation
+library(tidyverse) #For piping command
+library(reshape2) #For fancy conditional effects plot
+library(ggridges) #For fancy conditional effects plot
+library(bayesplot) #For fancy conditional effects plot
+library(hexbin) #For fancy plot
+```
+
+#DATAFRAME
+
+```{r}
+df <- read.csv("~/Desktop/Menstrual taboos/R CODE DATA FILES (USE)/Master's data set.csv", header=TRUE) #Load in dataframe
+```
+
+#PHYLOGENETIC TREE
+
+```{r}
+phylo<-readNexus("~/Desktop/Menstrual taboos/R CODE DATA FILES (USE)/Time-calibrated SCCS supertree ultrametric.nex") #Load the phylogeny
+```
+
+#MAKE CULTURE NAMES THE ROWNAMES IN DATAFRAME
+
+```{r}
+rownames(df) <- df$tip.label #Set rownames in data frame
+
+pop <- df[,2] #Store the population column
+
+str(df) #Look at data frame
+```
+
+#CLEAN PHYLOGENETIC TREE FOR ANALYSIS
+
+```{r}
+plotTree(phylo) #Look at phylogeny
+
+name.check (phylo,df$tip.label) # check which populations are in the tree but not in the data and remove them; we remove those populations that have missing data for any of the outcomes
+MT_Tree <- drop.tip (phylo, tip=c("Abipon", "Abkhaz", "Ajie", "Atayal", "Aweikoma", "Banen", "Basseri", "Bogo", "Cayua", "Fur_Darfur", "Gheg_Albanians", "Haitians", "Hausa", "Hebrews", "Ifugao", "Khalka_Mongols", "Konso", "Lamet", "Mao", "Mbau_Fijians", "MISSING_Botocudo", "MISSING_Kafa_Kaffa", "MISSING_Kutenai", "MISSING_Natchez", "MISSING_Timbira", "MISSING_Twana", "Mundurucu", "Negri_Sembilan", "New_Ireland", "Nicobarese", "Orokaiva", "Palauans", "Pentecost", "Popoluca", "Punjabi_West", "Rhade", "Russians", "Shilluk", "Suku", "Tobelorese", "Turks",  "Uttar_Pradesh"))
+
+name.check (MT_Tree, df) # OK
+write.tree (MT_Tree, "MT.Phylo") # write the reduced tree
+
+phylo.Reduced <- read.tree("MT.Phylo")
+
+phylo_vcv <- vcv.phylo(phylo, cor=TRUE)
+phylo.reduced <- vcv.phylo(phylo.Reduced, cor=TRUE)
+```
+
+#MICE METHOD FOR DATA IMPUTATION (MEN_POLY VARIABLE)
+
+```{r}
+md.pattern(df)
+```
+
+```{r}
+imputed_data <- mice(df, method="cart")
+```
+
+```{r}
+full_data <- complete(imputed_data) 
+```
+
+```{r}
+#Make sure there is no more missing data
+md.pattern(full_data)
+```
+
+#CLEANING VARIABLES
+
+```{r}
+#Set presence/absence factor levels
+full_data$Presence <- as.factor(full_data$Expression)
+levels(full_data$Presence) <- list("Absence of Menstrual Taboos"=c("0"),"Presence of Menstrual Taboos"=c("1"))
+```
+
+```{r}
+#Set level of restriction factor levels
+full_data$Restriction <- ordered(full_data$Restrictiveness)
+levels(full_data$Restriction) <- list("Absence of Menstrual Taboos"=c("0"),
+"Minimally Restrictive Menstrual Taboos"=c("1"), 
+"Moderately Restrictive Menstrual Taboos"=c("2"), 
+"Severly Restrictive Menstrual Taboos"=c("3"))
+```
+
+```{r}
+#Set subsistence strategy as a factor
+full_data$Subsistence <- as.factor(full_data$Subsistence)
+levels(full_data$Subsistence) <- list("Agriculture"=c("1"),
+"Horticulture"=c("2"), 
+"Hunter-Gatherers"=c("3"), 
+"Pastoralism"=c("4"))
+full_data$Subsistence <- factor(full_data$Subsistence, levels = c("Hunter-Gatherers", "Agriculture", "Horticulture", "Pastoralism"))
+
+#Set biome as a factor
+full_data$Biome <- as.factor(full_data$Landscape)
+levels(full_data$Biome)
+levels(full_data$Biome) <- list("Deserts"=c("1"),
+"Forests"=c("2"), 
+"Grasslands"=c("3"), 
+"Tundra"=c("4"))
+full_data$Biome <- factor(full_data$Biome, levels = c("Tundra", "Deserts", "Forests", "Grasslands"))
+
+#Scale polygyny variable
+full_data$Men_Poly.s <- scale(full_data$Men_Poly)
+```
+
+#PHYLOGENETICALLY CONTROLLED PRINCIPAL COMPONENTS ANALYSIS FOR LATENT VARIABLE CREATION
+
+```{r}
+climate <- scale(subset(full_data, select = MeanMonthlyTemperature:Precipitation_Predictability)) #subset and scale ecological data for pPCA
+```
+
+```{r}
+#Organization to perfrom pPCA
+climate <- as.matrix(climate)
+```
+
+```{r}
+#Initial pPCA
+pPCA <- phyl.pca(phylo.Reduced, climate, mode = "cov", method = "lambda")
+pPCA
+```
+
+```{r}
+plot(pPCA)
+biplot(pPCA)
+```
+
+```{r}
+#Determining how many principal components to keep?
+PC <- fa.parallel(climate, fa="pc", n.iter=1000)
+```
+
+```{r}
+#rotasting the PCA loadings to enhance interpretation and readability
+rotation <- GPForth(pPCA$L[,1:2], method = "quartimax")
+rotation
+```
+
+```{r}
+#Calculating the proportion of variance explained by PCs
+
+#Total variance explained
+sum(apply(rotation$loadings, 2, function(x) sum(x^2)/nrow(rotation$loadings))) #Around 74% of the variance can be explained by the PCA
+
+#PC1 (Temperature)
+sum(rotation$loadings[,1]^2)/nrow(rotation$loadings) #Around 41% of the variance can be explained by PC1
+
+#PC2 (Precipitation)
+sum(rotation$loadings[,2]^2)/nrow(rotation$loadings) #Around 33% of the variance can be explained by PC2
+```
+
+```{r}
+#Calculation of the ancestral means
+C <- vcv.phylo(phylo.Reduced) [rownames(climate), rownames(climate)]
+temp <- phyl.vcv(climate, C, pPCA$lambda)
+a <- t(temp$alpha)
+```
+
+```{r}
+#Calculation of the rotated pPC scores (with ancestral mean centering)
+B <- t(pseudoinverse(rotation$loadings))
+Climate.scores <- data.frame((scale(climate, center = a, scale = FALSE) %*% B))
+```
+
+```{r}
+#Organization of the climate scores
+#PC1
+Climate.scores[rownames(Climate.scores) %in% rownames (pPCA$S), "PC1"] <- Climate.scores[,1]
+
+#PC2
+Climate.scores[rownames(Climate.scores) %in% rownames (pPCA$S), "PC2"] <- Climate.scores[,2]
+
+#Remove extra columns
+Climate.scores <- Climate.scores[,-1]
+Climate.scores <- Climate.scores[,-1]
+```
+
+```{r}
+#Combining the pPCA latenet variables and the original dataframe together
+Combo.df <- cbind(full_data, PC1 = Climate.scores$PC1, PC2 = Climate.scores$PC2)
+```
+
+#SIMPLE PRESENCE MODEL
+
+```{r}
+#Creating the priors for the model
+prior_list <- get_prior(Presence ~ (1|gr(tip.label, cov = phylo.reduced)), 
+              data=Combo.df, 
+              family=bernoulli(link = "logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced))
+
+prior_list[1,1] <- "normal(0,1)" #Weakly informative priors
+
+prior_list
+```
+
+```{r}
+#Fitting overfitting check model
+Presence.Simple <- brm(Presence ~ (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=bernoulli(link = "logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior_list)
+```
+
+```{r}
+#Traceplot
+plot(Presence.Simple)
+```
+
+```{r}
+#Posterior predictive checks (pp-check)
+pp_check(Presence.Simple)
+```
+
+```{r}
+bayes_R2(Presence.Simple)
+bayes_R2(Presence.Simple, re_formula=NA)
+```
+
+```{r}
+#Creating the summary table for the model
+summary(Presence.Simple, prob = 0.9)
+```
+
+```{r}
+#Save the model
+saveRDS(Presence.Simple, "PRESENCEsimple.RDS")
+```
+
+```{r}
+#For loo comparison
+Presence_SLoo <- loo(Presence.Simple)
+```
+
+```{r}
+#In the first step, we essentially extract the main effect estimates (“b_...“) from the posterior samples file, and then translate them into long form before applying ggplot
+post_samples_fit2 <- posterior_samples(Presence.Simple)
+head(post_samples_fit2  %>% round(1))
+str(post_samples_fit2)
+fit.Presence2 <- post_samples_fit2 %>% select(1:3)
+
+fit.Presence2
+str(fit.Presence2)
+fit.Restrict.t12 <- melt(fit.Presence2)
+str(fit.Restrict.t12)
+```
+
+```{r}
+
+##This plot specifies the upper and lower CIs and colours the inner 95% region.
+fit.Restrict.plot2 <- ggplot(fit.Restrict.t12, aes(x = value, y = variable, fill=factor(..quantile..))) +
+ stat_density_ridges(rel_min_height = 0.01, geom = "density_ridges_gradient", calc_ecdf = TRUE, quantiles = c(0.025, 0.975)) +
+ scale_fill_manual(name = NULL, values = c("white", "mediumpurple1", "white")) +
+ theme_classic(base_size = 15) + vline_at(0, size= 0.5, color = "black", linetype = "dashed") + scale_y_discrete(expand = c(0.01, 0), limits = rev(levels(as.factor(fit.Restrict.t12$variable))))
+fit.Restrict.plot2 + geom_hline(yintercept = 2:10, size=0.1, linetype="dotted") + labs(x = "Intercept", y="") + theme(legend.position = "no")
+```
+
+```{r}
+#I think this is a few different types of pairs plots 
+mcmc_plot(
+  Presence.Simple,,
+  type = 'pairs',
+  diag_fun = 'dens',  
+  off_diag_fun = 'hex',
+  fixed = TRUE
+)
+pairs(Presence.Simple, variable = variables(Presence.Simple)[1:2], off_diag_fun = 'hex')
+```
+
+#PRESENCE MODEL WITH NO BIOME INCLUDED
+
+```{r}
+#Creating the priors for the model
+prior_list1 <- get_prior(Presence ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)), 
+              data=Combo.df, 
+              family=bernoulli(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced))
+
+prior_list1[1,1] <- "normal(0,1)" #Weakly informative priors
+
+prior_list1
+```
+
+```{r}
+#Fitting overfitting check model
+Presence.NoBiome <- brm(Presence ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=bernoulli(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4,
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior_list1)
+```
+
+```{r}
+#Traceplot
+plot(Presence.NoBiome)
+```
+
+```{r}
+#Posterior predictive checks (pp-check)
+pp_check(Presence.NoBiome)
+```
+
+```{r}
+bayes_R2(Presence.NoBiome)
+bayes_R2(Presence.NoBiome, re_formula=NA)
+```
+
+```{r}
+#Creating the summary table for the model
+summary(Presence.NoBiome, prob = 0.9)
+```
+
+```{r}
+#In the first step, we essentially extract the main effect estimates (“b_...“) from the posterior samples file, and then translate them into long form before applying ggplot
+post_samples_fit2 <- posterior_samples(Presence.NoBiome)
+head(post_samples_fit2  %>% round(1))
+str(post_samples_fit2)
+fit.Presence2 <- post_samples_fit2 %>% select(1:9)
+
+fit.Presence2
+str(fit.Presence2)
+fit.Restrict.t12 <- melt(fit.Presence2)
+str(fit.Restrict.t12)
+```
+
+```{r}
+
+##This plot specifies the upper and lower CIs and colours the inner 95% region.
+fit.Restrict.plot2 <- ggplot(fit.Restrict.t12, aes(x = value, y = variable, fill=factor(..quantile..))) +
+ stat_density_ridges(rel_min_height = 0.01, geom = "density_ridges_gradient", calc_ecdf = TRUE, quantiles = c(0.025, 0.975)) +
+ scale_fill_manual(name = NULL, values = c("white", "mediumpurple1", "white")) +
+ theme_classic(base_size = 15) + vline_at(0, size= 0.5, color = "black", linetype = "dashed") + scale_y_discrete(expand = c(0.01, 0), limits = rev(levels(as.factor(fit.Restrict.t12$variable))))
+fit.Restrict.plot2 + geom_hline(yintercept = 2:10, size=0.1, linetype="dotted") + labs(x = "Intercept", y="") + theme(legend.position = "no")
+```
+
+```{r}
+plot(conditional_effects(Presence.NoBiome))
+```
+
+```{r}
+#Save the model
+saveRDS(Presence.NoBiome, "PRESENCENoBiome.RDS")
+```
+
+```{r}
+#For loo comparison
+Presence_NBLoo <- loo(Presence.NoBiome)
+loo_compare(Presence_SLoo, Presence_NBLoo)
+```
+
+```{r}
+#I think this is a few different types of pairs plots (Will ask Madison to sned her code once she is back from her parents)
+mcmc_plot(
+  Presence.NoBiome,
+  type = 'pairs',
+  diag_fun = 'dens',
+  off_diag_fun = 'hex',
+  fixed = TRUE)
+
+pairs(Presence.NoBiome, variable = variables(Presence.NoBiome)[2:10], off_diag_fun = 'hex')
+pairs(Presence.NoBiome, variable = variables(Presence.NoBiome)[2:9], off_diag_fun = 'hex')
+```
+
+#PRESENCE MODEL WITH BIOME INCLUDED AS A RANDOM EFFECT
+
+```{r}
+#Creating the priors for the model
+prior_list2 <- get_prior(Presence ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=bernoulli(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced))
+
+prior_list2[1,1] <- "normal(0,1)" #Weakly informative priors
+
+prior_list2
+```
+
+```{r}
+#Fitting overfitting check model
+Presence.Biome <- brm(Presence ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=bernoulli(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior_list2)
+```
+
+```{r}
+#Traceplot
+plot(Presence.Biome)
+```
+
+```{r}
+#Posterior predictive checks (pp-check)
+pp_check(Presence.Biome)
+```
+
+```{r}
+bayes_R2(Presence.Biome)
+bayes_R2(Presence.Biome, re_formula=NA)
+```
+
+```{r}
+#Creating the summary table for the model
+summary(Presence.Biome, prob = 0.9)
+```
+
+```{r}
+#In the first step, we essentially extract the main effect estimates (“b_...“) from the posterior samples file, and then translate them into long form before applying ggplot
+post_samples_fit2 <- posterior_samples(Presence.Biome)
+head(post_samples_fit2  %>% round(1))
+str(post_samples_fit2)
+fit.Presence2 <- post_samples_fit2 %>% select(1:10)
+
+fit.Presence2
+str(fit.Presence2)
+fit.Restrict.t12 <- melt(fit.Presence2)
+str(fit.Restrict.t12)
+```
+
+```{r}
+
+##This plot specifies the upper and lower CIs and colours the inner 95% region.
+fit.Restrict.plot2 <- ggplot(fit.Restrict.t12, aes(x = value, y = variable, fill=factor(..quantile..))) +
+ stat_density_ridges(rel_min_height = 0.01, geom = "density_ridges_gradient", calc_ecdf = TRUE, quantiles = c(0.025, 0.975)) +
+ scale_fill_manual(name = NULL, values = c("white", "mediumpurple1", "white")) +
+ theme_classic(base_size = 15) + vline_at(0, size= 0.5, color = "black", linetype = "dashed") + scale_y_discrete(expand = c(0.01, 0), limits = rev(levels(as.factor(fit.Restrict.t12$variable))))
+fit.Restrict.plot2 + geom_hline(yintercept = 2:10, size=0.1, linetype="dotted") + labs(x = "Intercept", y="") + theme(legend.position = "no")
+```
+
+```{r}
+plot(conditional_effects(Presence.Biome))
+```
+
+```{r}
+#Save the model
+saveRDS(Presence.Biome, "PRESENCEBiome.RDS")
+```
+
+```{r}
+#For loo comparison
+Presence_BLoo <- loo(Presence.Biome)
+loo_compare(Presence_SLoo, Presence_NBLoo, Presence_BLoo)
+```
+
+```{r}
+#I think this is a few different types of pairs plots (Will ask Madison to sned her code once she is back from her parents)
+mcmc_plot(
+  Presence.Biome,
+  type = 'pairs',
+  diag_fun = 'dens',
+  off_diag_fun = 'hex',
+  fixed = TRUE)
+
+pairs(Presence.Biome, variable = variables(Presence.Biome)[2:7], off_diag_fun = 'hex')
+```
+
+#SIMPLE RESTRICTION MODEL (CUMULATIVE MODEL)
+
+```{r}
+#Creating the priors for the model
+prior_list3 <- get_prior(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)), 
+              data=Combo.df, 
+              family=cumulative(link = "logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced))
+
+prior_list3[1,1] <- "normal(0,1)" #Weakly informative priors
+
+prior_list3
+```
+
+```{r Rose playing around with priors and model 1...}
+
+#Remember to include sample_prior = "only" for priors only models
+
+prior_list3[1,1] <- "normal(0,1)"
+prior_list3[1,1] <- "normal(0,4)"
+
+#Default student only priors
+fit_prior_only1.1 <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, init =0, verbose=0, sample_prior = "only")
+
+#Setting normal(0,1) priors on the intercepts
+fit_prior_only1.2 <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, init =0, prior = prior_list3, verbose=0, sample_prior = "only")
+
+#Setting normal(0,4) priors on the intercepts
+fit_prior_only1.3 <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, init =0, prior = prior_list3, verbose=0, sample_prior = "only")
+
+#Comapre - priors don't seem to necessarily do good things for all coefs. Might be better to leave defaults. Check with real model.
+pp_check(fit_prior_only1.1, type="bars")
+pp_check(fit_prior_only1.2, type="bars")
+pp_check(fit_prior_only1.3, type="bars")
+
+prior_summary(fit_prior_only1.1)
+prior_summary(fit_prior_only1.2)
+prior_summary(fit_prior_only1.3)
+
+#Fit and compare full models
+
+## Default priors
+Restriction.Simple1.1 <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link = "logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 6000,
+              control = list(adapt_delta = .99))
+
+## Normal(0,1) priors
+Restriction.Simple1.2 <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link = "logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 6000,
+              control = list(adapt_delta = .99),
+              prior = prior_list3)
+
+## Normal(0.4) priors
+Restriction.Simple1.3 <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link = "logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 6000,
+              control = list(adapt_delta = .99),
+              prior = prior_list3)
+
+#Compare model fit
+pp_check(Restriction.Simple1.1, type="bars")
+pp_check(Restriction.Simple1.2, type="bars")
+pp_check(Restriction.Simple1.3, type="bars")
+
+#Compare fits. Stronger intercept priors marginally improve fit but not by a huge or really meaningful amount.
+loo_compare(loo(Restriction.Simple1.1), loo(Restriction.Simple1.2), loo(Restriction.Simple1.3))
+
+#Check probit versus logit with best fit model
+
+## Defualt priors
+Restriction.Simple1.1.p <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link = "probit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 6000,
+              control = list(adapt_delta = .99))
+
+## Normal(0,1) priors
+Restriction.Simple1.2.p <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link = "probit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 6000,
+              control = list(adapt_delta = .99),
+              prior = prior_list3)
+
+#Compare: priors + link. 
+loo_compare(loo(Restriction.Simple1.1), loo(Restriction.Simple1.2), loo(Restriction.Simple1.3), loo(Restriction.Simple1.2.p), loo(Restriction.Simple1.1.p))
+
+#Since priors don't really do much for fit, check how they influence results. Are the model results robust? Yes, not much changes. 
+print(Restriction.Simple1.1)
+print(Restriction.Simple1.2)
+print(Restriction.Simple1.2.p)
+
+```
+
+```{r}
+#run the model witout data!
+fit_prior_only1 <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, prior = prior_list3, init =0, verbose=0)
+
+pp_check(fit_prior_only1, type="bars")
+
+#see what the model predicts
+#conditional_effects(fit_prior_only1)
+```
+
+```{r}
+#Fitting overfitting check model
+Restriction.Simple <- brm(Restriction ~ (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link = "logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 6000,
+              control = list(adapt_delta = .99),
+              prior = prior_list3)
+```
+
+```{r}
+#Traceplot
+plot(Restriction.Simple)
+```
+
+```{r}
+#get the summary of the priors
+prior_summary(Restriction.Simple)
+```
+
+```{r}
+#Posterior predictive checks (pp-check)
+pp_check(Restriction.Simple, ndraws = 150)
+pp_check(Restriction.Simple, type = "hist")
+```
+
+```{r}
+bayes_R2(Restriction.Simple)
+bayes_R2(Restriction.Simple, re_formula=NA)
+```
+
+```{r}
+#Creating the summary table for the model
+summary(Restriction.Simple, prob = 0.9)
+```
+
+```{r}
+#Save the model
+saveRDS(Restriction.Simple, "RESTRICTIONsimple.RDS")
+```
+
+```{r}
+#For loo comparison
+Restriction_SLoo <- loo(Restriction.Simple)
+```
+
+```{r}
+#In the first step, we essentially extract the main effect estimates (“b_...“) from the posterior samples file, and then translate them into long form before applying ggplot
+post_samples_fit2 <- posterior_samples(Restriction.Simple)
+head(post_samples_fit2  %>% round(1))
+str(post_samples_fit2)
+fit.Presence2 <- post_samples_fit2 %>% select(1:8)
+
+fit.Presence2
+str(fit.Presence2)
+fit.Restrict.t12 <- melt(fit.Presence2)
+str(fit.Restrict.t12)
+
+```
+
+```{r}
+
+##This plot specifies the upper and lower CIs and colours the inner 95% region.
+fit.Restrict.plot2 <- ggplot(fit.Restrict.t12, aes(x = value, y = variable, fill=factor(..quantile..))) +
+ stat_density_ridges(rel_min_height = 0.01, geom = "density_ridges_gradient", calc_ecdf = TRUE, quantiles = c(0.025, 0.975)) +
+ scale_fill_manual(name = NULL, values = c("white", "mediumpurple1", "white")) +
+ theme_classic(base_size = 15) + vline_at(0, size= 0.5, color = "black", linetype = "dashed") + scale_y_discrete(expand = c(0.01, 0), limits = rev(levels(as.factor(fit.Restrict.t12$variable))))
+fit.Restrict.plot2 + geom_hline(yintercept = 2:10, size=0.1, linetype="dotted") + labs(x = "Intercept", y="") + theme(legend.position = "no")
+```
+
+```{r}
+#I think this is a few different types of pairs plots (Will ask Madison to sned her code once she is back from her parents)
+mcmc_plot(
+  Restriction.Simple,
+  type = 'pairs',
+  diag_fun = 'dens',
+  off_diag_fun = 'hex',
+  fixed = TRUE)
+
+pairs(Restriction.Simple, variable = variables(Restriction.Simple)[1:3], off_diag_fun = 'hex')
+```
+
+#RESTRICT MODEL WITH NO BIOME INCLUDED (CUMULATIVE MODEL)
+
+```{r}
+#Creating the priors for the model
+prior_list4 <- get_prior(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)), 
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced))
+
+prior_list4[1,1] <- "normal(0,1)" #Weakly informative priors
+
+prior_list4
+
+```
+
+```{r Rose playing around with priors + model 2...}
+
+#Conclusion: priors do very little to improve fit. You could include intercept priors for fractionally better fit but it doesn't improve much. Given the importance of the first category in this (1), I would probably prioritise that fit and not include the intercept priors (as the model you're using already does).  
+
+#Remember to include sample_prior = "only" for priors only models
+prior_list4 <- get_prior(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)), 
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced))
+
+prior1 = prior(normal(0,1), class = b)
+prior2 = prior(normal(0,1), class = b) + prior(normal(0,1), class = Intercept)
+prior3 = prior(normal(0,1), class = b) + prior(normal(0,4), class = Intercept)
+prior4 = prior(normal(0,1), class = b) + prior(normal(0,0.1), class = Intercept)
+
+#Default student only priors on intercepts
+fit_prior_only2.1 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, data2 = list(phylo.reduced = phylo.reduced), family= cumulative(link = "logit"), prior = prior1, sample_prior = "only", chains=4, init =0, verbose=0)
+
+#Setting normal(0,1) priors on the intercepts
+fit_prior_only2.2 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, data2 = list(phylo.reduced = phylo.reduced), family= cumulative(link = "logit"), prior = prior2, sample_prior = "only", chains=4, init =0, verbose=0)
+
+#Setting normal(0,4) priors on the intercepts
+fit_prior_only2.3 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, data2 = list(phylo.reduced = phylo.reduced), family= cumulative(link = "logit"), prior = prior3, sample_prior = "only", chains=4, init =0, verbose=0)
+
+#Check priors set properly
+prior_summary(fit_prior_only2.1)
+prior_summary(fit_prior_only2.2)
+prior_summary(fit_prior_only2.3)
+
+#Compare - priors don't seem to necessarily do good things for all coefs. Might be better to leave defaults. Check with real model.
+pp_check(fit_prior_only2.1, type="bars")
+pp_check(fit_prior_only2.2, type="bars")
+pp_check(fit_prior_only2.3, type="bars")
+
+#Fit and compare full models
+
+## Default priors
+
+Restriction.NoBiome2.1 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior1)
+
+Restriction.NoBiome2.2 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior2)
+
+Restriction.NoBiome2.3 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior3)
+
+#Are intercept priors doing anything? Check with absurd priors
+Restriction.NoBiome2.4 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior4)
+
+#Check probit
+Restriction.NoBiome2.5 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="probit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior1)
+
+pp_check(Restriction.NoBiome2.1, type="bars")
+pp_check(Restriction.NoBiome2.2, type="bars")
+pp_check(Restriction.NoBiome2.3, type="bars")
+pp_check(Restriction.NoBiome2.4, type="bars")
+pp_check(Restriction.NoBiome2.5, type="bars")
+
+loo_compare(loo(Restriction.NoBiome2.1), loo(Restriction.NoBiome2.2), loo(Restriction.NoBiome2.3), loo(Restriction.NoBiome2.4), loo(Restriction.NoBiome2.5))
+
+```
+
+```{r}
+#run the model witout data!
+fit_prior_only2 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, data2 = list(phylo.reduced = phylo.reduced), family= cumulative(link = "logit"), chains=4, prior = prior_list4, init =0, verbose=0)
+
+#see what the model predicts
+conditional_effects(fit_prior_only2, categorical = TRUE)
+```
+
+```{r}
+#Fitting overfitting check model
+Restriction.NoBiome <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior_list4)
+```
+
+```{r}
+#Traceplot
+plot(Restriction.NoBiome)
+```
+
+```{r}
+#get the summary of the priors
+prior_summary(Restriction.NoBiome)
+```
+
+```{r}
+#Posterior predictive checks (pp-check)
+pp_check(Restriction.NoBiome, ndraws = 150)
+pp_check(Restriction.NoBiome, type = "bars")
+```
+
+```{r}
+bayes_R2(Restriction.NoBiome)
+bayes_R2(Restriction.NoBiome, re_formula=NA)
+```
+
+```{r}
+#Creating the summary table for the model
+summary(Restriction.NoBiome, prob = 0.9)
+```
+
+```{r}
+# get predicted probabilities
+d2 = Combo.df %>%
+  filter(!is.na(Restriction)) %>%
+  mutate(predicted = predict(Restriction.NoBiome, type = "response")[ , 1])
+
+# plot predicted probability
+ggplot(d2, aes(x = PC1, y = predicted, color = Restriction)) +
+  geom_smooth(se = TRUE) +
+  labs(x = "Temperature", y = "predicted probability")
+ggplot(d2, aes(x = PC2, y = predicted, color = Restriction)) +
+  geom_smooth(se = TRUE) +
+  labs(x = "Precipitation", y = "predicted probability")
+ggplot(d2, aes(x = Subsistence, y = predicted, color = Restriction)) +
+  geom_boxplot(se = TRUE) +
+  labs(x = "Subsistence Pattern", y = "predicted probability")
+ggplot(d2, aes(x = Men_Poly.s, y = predicted, color = Restriction)) +
+  geom_smooth(se = TRUE) +
+  labs(x = "% Men Married Poly", y = "predicted probability")
+```
+
+```{r}
+plot(conditional_effects(Restriction.NoBiome, categorical = TRUE))
+```
+
+```{r}
+#In the first step, we essentially extract the main effect estimates (“b_...“) from the posterior samples file, and then translate them into long form before applying ggplot
+post_samples_fit2 <- posterior_samples(Restriction.NoBiome)
+head(post_samples_fit2  %>% round(1))
+str(post_samples_fit2)
+fit.Presence2 <- post_samples_fit2 %>% select(1:9)
+
+fit.Presence2
+str(fit.Presence2)
+fit.Restrict.t12 <- melt(fit.Presence2)
+str(fit.Restrict.t12)
+```
+
+```{r}
+
+##This plot specifies the upper and lower CIs and colours the inner 95% region.
+fit.Restrict.plot2 <- ggplot(fit.Restrict.t12, aes(x = value, y = variable, fill=factor(..quantile..))) +
+ stat_density_ridges(rel_min_height = 0.01, geom = "density_ridges_gradient", calc_ecdf = TRUE, quantiles = c(0.025, 0.975)) +
+ scale_fill_manual(name = NULL, values = c("white", "mediumpurple1", "white")) +
+ theme_classic(base_size = 15) + vline_at(0, size= 0.5, color = "black", linetype = "dashed") + scale_y_discrete(expand = c(0.01, 0), limits = rev(levels(as.factor(fit.Restrict.t12$variable))))
+fit.Restrict.plot2 + geom_hline(yintercept = 2:10, size=0.1, linetype="dotted") + labs(x = "Intercept", y="") + theme(legend.position = "no")
+```
+
+```{r}
+#Save the model
+saveRDS(Restriction.NoBiome, "RESTRICTIONNoBiome.RDS")
+```
+
+```{r}
+#For loo comparison
+Restrict_NBLoo <- loo(Restriction.NoBiome)
+loo_compare(Restriction_SLoo, Restrict_NBLoo)
+```
+
+```{r}
+#I think this is a few different types of pairs plots
+mcmc_plot(
+  Restriction.NoBiome,
+  type = 'pairs',
+  diag_fun = 'dens',
+  off_diag_fun = 'hex',
+  fixed = TRUE)
+
+pairs(Restriction.NoBiome, variable = variables(Restriction.NoBiome)[4:10], off_diag_fun = 'hex')
+```
+
+#RESTRICT MODEL WITH BIOME INCLUDED (CUMULATIVE MODEL)
+
+```{r}
+#Creating the priors for the model
+prior_list5 <- get_prior(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced))
+
+prior_list5[1,1] <- "normal(0,1)" #Weakly informative priors
+
+prior_list5
+```
+
+```{r Rose playing around with priors + model 3...}
+
+#Conclusion: priors do very little to improve fit. You could include intercept priors for fractionally better fit but it doesn't improve much. Given the importance of the first category in this (1), I would probably prioritise that fit and not include the intercept priors (as the model you're using already does).  
+
+#Remember to include sample_prior = "only" for priors only models
+prior_list5 <- get_prior(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced))
+
+prior1 = prior(normal(0,1), class = b)
+prior2 = prior(normal(0,1), class = b) + prior(normal(0,1), class = Intercept)
+prior3 = prior(normal(0,1), class = b) + prior(normal(0,4), class = Intercept)
+prior4 = prior(normal(0,1), class = b) + prior(normal(0,0.1), class = Intercept)
+
+prior5 = c(
+  prior(normal(-0.6744898, 1), class = Intercept, coef = 1),
+  prior(normal(0, 1), class = Intercept, coef = 2),
+  prior(normal(0.6744898, 1), class = Intercept, coef = 3),
+  prior(normal(0, 0.5), class = b))
+
+prior6 = c(
+  prior(normal(-0.6744898, 1), class = Intercept, coef = 1),
+  prior(normal(0, 1), class = Intercept, coef = 2),
+  prior(normal(0.6744898, 1), class = Intercept, coef = 3),
+  prior(normal(0, 1), class = b))
+
+prior7 = prior(normal(0,0.5), class = b)
+
+
+
+tibble(rating = 1:4) %>% 
+  mutate(proportion = 1/4) %>% 
+  mutate(cumulative_proportion = cumsum(proportion)) %>% 
+  mutate(right_hand_threshold = qnorm(cumulative_proportion))
+
+#Default student only priors on intercepts
+fit_prior_only3.1 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, prior = prior1, init =0, verbose=0)
+
+#Setting normal(0,1) priors on the intercepts
+fit_prior_only3.2 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, prior = prior2, init =0, verbose=0)
+
+#Setting normal(0,4) priors on the intercepts
+fit_prior_only3.3 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, prior = prior3, init =0, verbose=0)
+
+#Setting normal(0,4) priors on the intercepts
+fit_prior_only3.4 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, prior = prior4, init =0, verbose=0)
+
+#Check priors set properly
+prior_summary(fit_prior_only3.1)
+prior_summary(fit_prior_only3.2)
+prior_summary(fit_prior_only3.3)
+prior_summary(fit_prior_only3.4)
+
+#Compare - priors don't seem to necessarily do good things for all coefs. Might be better to leave defaults. Check with real model.
+pp_check(fit_prior_only3.1, type="bars")
+pp_check(fit_prior_only3.2, type="bars")
+pp_check(fit_prior_only3.3, type="bars")
+pp_check(fit_prior_only3.4, type="bars")
+
+#Fit and compare full models
+
+## Default priors
+
+Restriction.Biome3.1 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior1)
+
+Restriction.Biome3.2 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior2)
+
+Restriction.Biome3.3 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior3)
+
+#Are intercept priors doing anyhting? Check with absurdly strong priors
+Restriction.Biome3.4 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior4)
+
+#Check probit
+Restriction.Biome3.5 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="probit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior1)
+
+Restriction.Biome3.6 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="probit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior5)
+
+Restriction.Biome3.7 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="probit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior6)
+
+Restriction.Biome3.8 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="probit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior7)
+
+
+pp_check(Restriction.Biome3.1, type="bars")
+pp_check(Restriction.Biome3.2, type="bars")
+pp_check(Restriction.Biome3.3, type="bars")
+pp_check(Restriction.Biome3.4, type="bars")
+pp_check(Restriction.Biome3.5, type="bars")
+pp_check(Restriction.Biome3.6, type="bars")
+pp_check(Restriction.Biome3.7, type="bars")
+pp_check(Restriction.Biome3.8, type="bars")
+
+loo_compare(loo(Restriction.Biome3.1), loo(Restriction.Biome3.2), loo(Restriction.Biome3.3), loo(Restriction.Biome3.4), loo(Restriction.Biome3.5), loo(Restriction.Biome3.6), loo(Restriction.Biome3.7), loo(Restriction.Biome3.8))
+
+parnames(Restriction.Biome3.1)
+
+plot(conditional_effects(Restriction.Biome3.1, categorical=TRUE), ask=F)
+
+#pairs(Restriction.Biome3.1, var= c("b_Intercept[1]", "b_Intercept[2]", "b_Intercept[3]", "b_Intercept[1]", "b_PC2", "b_PC1",  "b_SubsistenceAgriculture", "b_SubsistenceHorticulture"))
+
+```
+
+```{r}
+#run the model witout data!
+fit_prior_only3 <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)), data=Combo.df, family= cumulative(link = "logit"), data2 = list(phylo.reduced = phylo.reduced), chains=4, prior = prior_list5, init =0, verbose=0)
+
+#see what the model predicts
+conditional_effects(fit_prior_only3, categorical = TRUE)
+
+```
+
+```{r}
+#Fitting overfitting check model
+Restriction.Biome <- brm(Restriction ~ PC1 + PC2 + Subsistence + Men_Poly.s + Biome + (1|gr(tip.label, cov = phylo.reduced)),
+              data=Combo.df, 
+              family=cumulative(link="logit"), 
+              save_pars = save_pars(all = TRUE),
+              data2 = list(phylo.reduced = phylo.reduced), 
+              chains=4, 
+              iter = 3000,
+              control = list(adapt_delta = .99),
+              prior = prior_list5)
+```
+
+```{r}
+#get the summary of the priors
+prior_summary(Restriction.Biome)
+```
+
+```{r}
+#Traceplot
+plot(Restriction.Biome)
+```
+
+```{r}
+#Posterior predictive checks (pp-check)
+pp_check(Restriction.Biome, ndraws = 150)
+pp_check(Restriction.NoBiome, type = "bars")
+```
+
+```{r}
+bayes_R2(Restriction.Biome)
+bayes_R2(Restriction.Biome, re_formula=NA)
+```
+
+```{r}
+#Creating the summary table for the model
+summary(Restriction.Biome, prob = 0.9)
+```
+
+```{r}
+# get predicted probabilities
+d2 = Combo.df %>%
+  filter(!is.na(Restriction)) %>%
+  mutate(predicted = predict(Restriction.Biome, type = "response")[ , 1])
+
+# plot predicted probability
+ggplot(d2, aes(x = PC1, y = predicted, color = Restriction)) +
+  geom_smooth(se = TRUE) +
+  labs(x = "Temperature", y = "predicted probability")
+ggplot(d2, aes(x = PC2, y = predicted, color = Restriction)) +
+  geom_smooth(se = TRUE) +
+  labs(x = "Precipitation", y = "predicted probability")
+ggplot(d2, aes(x = Subsistence, y = predicted, color = Restriction)) +
+  geom_boxplot(se = TRUE) +
+  labs(x = "Subsistence Pattern", y = "predicted probability")
+ggplot(d2, aes(x = Biome, y = predicted, color = Restriction)) +
+  geom_boxplot(se = TRUE) +
+  labs(x = "Biome", y = "predicted probability")
+ggplot(d2, aes(x = Men_Poly.s, y = predicted, color = Restriction)) +
+  geom_smooth(se = TRUE) +
+  labs(x = "% Men Married Poly", y = "predicted probability")
+```
+
+```{r}
+plot(conditional_effects(Restriction.Biome, categorical = TRUE))
+```
+
+```{r}
+#In the first step, we essentially extract the main effect estimates (“b_...“) from the posterior samples file, and then translate them into long form before applying ggplot
+post_samples_fit2 <- posterior_samples(Restriction.Biome)
+head(post_samples_fit2  %>% round(1))
+str(post_samples_fit2)
+fit.Presence2 <- post_samples_fit2 %>% select(1:12)
+
+fit.Presence2
+str(fit.Presence2)
+fit.Restrict.t12 <- melt(fit.Presence2)
+str(fit.Restrict.t12)
+
+```
+
+```{r}
+
+##This plot specifies the upper and lower CIs and colours the inner 95% region.
+fit.Restrict.plot2 <- ggplot(fit.Restrict.t12, aes(x = value, y = variable, fill=factor(..quantile..))) +
+ stat_density_ridges(rel_min_height = 0.01, geom = "density_ridges_gradient", calc_ecdf = TRUE, quantiles = c(0.025, 0.975)) +
+ scale_fill_manual(name = NULL, values = c("white", "mediumpurple1", "white")) +
+ theme_classic(base_size = 15) + vline_at(0, size= 0.5, color = "black", linetype = "dashed") + scale_y_discrete(expand = c(0.01, 0), limits = rev(levels(as.factor(fit.Restrict.t12$variable))))
+fit.Restrict.plot2 + geom_hline(yintercept = 2:10, size=0.1, linetype="dotted") + labs(x = "Intercept", y="") + theme(legend.position = "no")
+```
+
+```{r}
+#Save the model
+saveRDS(Restriction.Biome, "RESTRICTBiome.RDS")
+```
+
+```{r}
+#For loo comparison
+Restrict_BLoo <- loo(Restriction.Biome)
+loo_compare(Restriction_SLoo, Restrict_NBLoo, Restrict_BLoo)
+```
+
+```{r}
+#I think this is a few different types of pairs plots 
+mcmc_plot(
+  Restriction.Biome,
+  type = 'pairs',
+  diag_fun = 'dens',
+  off_diag_fun = 'hex',
+  fixed = TRUE)
+
+pairs(Restriction.Biome, variable = variables(Restriction.Biome)[4:10], off_diag_fun = 'hex')
+```
